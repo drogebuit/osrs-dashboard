@@ -119,6 +119,8 @@ function bossIcon(k){
   tztok_jad:'TzTok-Jad',vardorvis:'Vardorvis',venenatis:'Venenatis',vetion:'Vet\'ion',vorkath:'Vorkath',
   wintertodt:'Wintertodt',yama:'Yama',zalcano:'Zalcano',zulrah:'Zulrah'
  };
+ const official={abyssal_sire:'abyssal-sire',zulrah:'zulrah',cerberus:'cerberus'};
+ if(official[k]) return './assets/bosses/'+official[k]+'.png';
  const file=aliases[k]||nice(k).replaceAll(' ','_');
  return 'https://oldschool.runescape.wiki/images/'+encodeURIComponent(file)+'.png'
 } function renderBosses(bosses){const entries=Object.entries(bosses||{}).filter(([k,v])=>v&&Number(v.kills)>=0).sort((a,b)=>b[1].kills-a[1].kills);$('bossList').innerHTML=entries.map(([k,v])=>'<div class="line boss-line"><span class="boss-name"><img class="boss-icon" src="'+bossIcon(k)+'" alt="" loading="lazy" onerror="this.onerror=null;this.style.display=&quot;none&quot;;this.nextElementSibling.textContent=String.fromCodePoint(9760)"><i>☠</i><span>'+nice(k)+'</span></span><strong>'+fmt(v.kills)+' KC</strong></div>').join('')||'<div class="empty">Geen bossgegevens beschikbaar.</div>'}
