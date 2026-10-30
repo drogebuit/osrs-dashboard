@@ -194,6 +194,12 @@ function classifyActivity(a){
   const milestoneSkill=skill?nice(String(skill))+' · ':'';
   return {icon:'✨',title:'XP-mijlpaal behaald!',detail:milestoneSkill+xpText,special:'XP MILESTONE'};
  }
+ if(t==='xp_milestone'){
+  const milestoneSkill=String(d.name||'');
+  const milestoneXp=Number(d.xp||0);
+  const skillKey=milestoneSkill.toLowerCase().replaceAll(' ','_');
+  return {icon:'✨',image:milestoneSkill?skillIcon(skillKey):'',title:'XP-mijlpaal bereikt!',detail:(milestoneXp?fmt(milestoneXp)+' XP':'XP-aantal onbekend')+(milestoneSkill?' · '+milestoneSkill:''),special:'XP MILESTONE'};
+ }
  const isLevel=/level|skill/.test(t)||(/level|skill/i.test(String(a.category||d.category||'')))||!!skill&&level>0;
  if(isLevel){
   const skillKey=String(skill||'').toLowerCase().replaceAll(' ','_');
