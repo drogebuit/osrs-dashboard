@@ -191,8 +191,10 @@ function classifyActivity(a){
   const xp=typeof rawXp==='object'?deepActivityValue([rawXp],['xp','experience','value','amount','threshold']):rawXp;
   const xpNumber=Number(String(xp??'').replaceAll(',','').replaceAll('.',''));
   const xpText=Number.isFinite(xpNumber)&&xpNumber>0?fmt(xpNumber)+' XP':(xp?String(xp)+' XP':'XP-aantal niet beschikbaar');
-  const milestoneSkill=skill?nice(String(skill))+' · ':'';
-  return {icon:'✨',title:'XP-mijlpaal behaald!',detail:milestoneSkill+xpText,special:'XP MILESTONE'};
+  const milestoneName=String(d.name||skill||'');
+  const milestoneKey=milestoneName.toLowerCase().replaceAll(' ','_');
+  const milestoneLabel=milestoneName?nice(milestoneName)+' · ':'';
+  return {icon:'✨',image:milestoneName?skillIcon(milestoneKey):'',title:'XP-mijlpaal behaald!',detail:milestoneLabel+xpText,special:'XP MILESTONE'};
  }
  if(t==='xp_milestone'){
   const milestoneSkill=String(d.name||'');
