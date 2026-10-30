@@ -182,7 +182,7 @@ function classifyActivity(a){
  const level=Number(deepActivityValue(all,['newLevel','new_level','toLevel','to_level','currentLevel','current_level','level'])||0);
  const rawName=deepActivityValue([item,...objects],['itemName','item_name','name','displayName','display_name','questName','quest','title']);
  const itemName=typeof rawName==='object'?deepActivityValue([rawName],['name','displayName','title']):rawName;
- const itemId=Number(deepActivityValue([item,...objects],['itemId','item_id','itemID','id'])||0);
+ const itemId=Number(deepActivityValue([item],['id','itemId','item_id','itemID'])||deepActivityValue(objects,['itemId','item_id','itemID'])||0);
  const quantity=deepActivityValue(all,['quantity','amount','count','qty']);
  const value=Number(deepActivityValue(all,['value','price','gePrice','ge_price','marketPrice','market_price'])||0);
  const isLevel=/level|skill/.test(t)||(/level|skill/i.test(String(a.category||d.category||'')))||!!skill&&level>0;
