@@ -74,7 +74,7 @@ const fmt=n=>Number(n||0).toLocaleString('nl-NL'),short=n=>{n=Number(n||0);retur
 const nice=s=>String(s).replaceAll('_',' ').replace(/\b\w/g,c=>c.toUpperCase());
 async function get(url){const r=await fetch(url);if(!r.ok)throw Error('Wise Old Man HTTP '+r.status);return r.json()}
 let profile=null;
-function showTab(id){document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));['skills','bosses','gains','goals','wealth','collection','about'].forEach(k=>$(k).classList.toggle('hidden',k!==id));}
+function showTab(id){document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));['skills','bosses','gains','goals','wealth','collection','about'].forEach(k=>$(k).classList.toggle('hidden',k!==id));if(id==='collection'&&!clogLoaded)loadCollection();}
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
 function renderSkills(skills){const entries=Object.entries(skills||{}).filter(([k,v])=>k!=='overall'&&v&&v.level!=null).sort((a,b)=>a[0].localeCompare(b[0]));$('skillCount').textContent=entries.length+' skills';$('skillList').innerHTML=entries.map(([k,v])=>{const level=Number(v.level)||1,xp=Number(v.experience)||0,pct=level>=99?100:Math.max(0,Math.min(100,(xp/13034431)*100));return '<div class="skill"><div class="skillname">'+nice(k)+'</div><div><div class="xp">'+short(xp)+' XP'+(v.rank>0?' · rank '+fmt(v.rank):'')+'</div><div class="bar"><i style="width:'+pct+'%"></i></div></div><div class="level">'+level+'</div></div>'}).join('')||'<div class="empty">Geen skilldata beschikbaar.</div>'}
 function renderBosses(bosses){const entries=Object.entries(bosses||{}).filter(([k,v])=>v&&Number(v.kills)>=0).sort((a,b)=>b[1].kills-a[1].kills);$('bossList').innerHTML=entries.map(([k,v])=>'<div class="line"><span>'+nice(k)+'</span><strong>'+fmt(v.kills)+' KC</strong></div>').join('')||'<div class="empty">Geen bossgegevens beschikbaar.</div>'}
@@ -90,13 +90,13 @@ $('goalList').addEventListener('click',e=>{if(e.target.dataset.delgoal!==undefin
 function renderWealth(){const a=read('db-wealth',[]);$('wealthTotal').textContent=short(a.reduce((s,x)=>s+Number(x.value||0),0))+' GP';$('wealthList').innerHTML=a.length?a.map((x,i)=>'<div class="line"><span>'+escapeHtml(x.name)+'</span><strong>'+fmt(x.value)+' GP <button class="btn" data-delitem="'+i+'" type="button">×</button></strong></div>').join(''):'<div class="empty">Nog geen items geregistreerd.</div>'}
 $('wealthForm').addEventListener('submit',e=>{e.preventDefault();const a=read('db-wealth',[]);a.push({name:$('itemName').value.trim(),value:Number($('itemValue').value)});write('db-wealth',a);$('itemName').value='';$('itemValue').value='';renderWealth()});
 $('wealthList').addEventListener('click',e=>{if(e.target.dataset.delitem!==undefined){const a=read('db-wealth',[]);a.splice(Number(e.target.dataset.delitem),1);write('db-wealth',a);renderWealth()}});
-let clogData=null,clogTab='Bosses';
+let clogData=null,clogTab='Bosses',clogLoaded=false;
 const itemIcon=id=>'https://cdn.runeprofile.com/items/'+id+'.png';
 async function loadCollection(){
  $('clogItems').innerHTML='<div class="empty">Collection Log ophalen…</div>';
  try{
   const [log,feed]=await Promise.all([fetch(RP+'/collection-log').then(r=>{if(!r.ok)throw Error('RuneProfile HTTP '+r.status);return r.json()}),fetch(RP+'/activities?limit=50').then(r=>r.ok?r.json():{activities:[]}).catch(()=>({activities:[]}))]);
-  clogData=log;const pct=log.total?log.obtained/log.total*100:0;
+  clogData=log;clogLoaded=true;const pct=log.total?log.obtained/log.total*100:0;
   $('clogCount').textContent=fmt(log.obtained);$('clogTotal').textContent=fmt(log.total);$('clogPct').textContent=pct.toFixed(1).replace('.',',')+'%';$('clogProgress').style.width=Math.max(0,Math.min(100,pct))+'%';$('clogUpdated').textContent=new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'});
   $('clogTabs').innerHTML=(log.tabs||[]).map(t=>'<button class="btn '+(t.name===clogTab?'gold':'')+'" data-clogtab="'+escapeHtml(t.name)+'">'+escapeHtml(t.name)+' · '+t.obtained+'/'+t.total+'</button>').join('');
   renderClogPages();renderRecentClog(feed.activities||[]);
@@ -129,6 +129,6 @@ function renderRecentClog(activities){
 }
 $('clogTabs').addEventListener('click',e=>{const b=e.target.closest('[data-clogtab]');if(b){clogTab=b.dataset.clogtab;renderClogPages()}});$('clogPages').addEventListener('click',e=>{const b=e.target.closest('[data-clogpage]');if(!b||!clogData)return;const tab=(clogData.tabs||[]).find(t=>t.name===clogTab),page=tab?.pages?.[Number(b.dataset.clogpage)];if(!page)return;$('clogSelectedTitle').textContent=page.name;$('clogSelectedTitle').dataset.page=page.name;showClogPage()});
 $('clogPage').addEventListener('change',showClogPage);$('clogSearch').addEventListener('input',showClogPage);$('clogRefresh').addEventListener('click',loadCollection);
-renderGoals();renderWealth();load();loadCollection();
+renderGoals();renderWealth();load();
 if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
