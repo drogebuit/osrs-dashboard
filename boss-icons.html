@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#100d0a">
+<title>Boss-iconen controleren · Droge Buit</title>
+<style>
+:root{color-scheme:dark;--bg:#100d0a;--panel:#211a12;--line:#70502a;--gold:#d6a64c;--gold2:#ffe0a0;--txt:#f7edda;--muted:#b9a88d}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#5b3b1b 0,#24190f 32rem,#100d0a 70rem);color:var(--txt);font:15px/1.5 system-ui,sans-serif}
+header{position:sticky;top:0;z-index:2;background:#100d0af2;border-bottom:1px solid var(--line);padding:14px max(14px,calc((100% - 1100px)/2));backdrop-filter:blur(12px)}
+h1{margin:0;color:var(--gold2);font:700 22px Georgia,serif}header p{margin:5px 0 0;color:var(--muted);font-size:13px}
+main{max-width:1100px;margin:auto;padding:18px 14px 50px}.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+input{flex:1;min-width:210px;background:#170f09;color:var(--txt);border:1px solid var(--line);border-radius:9px;padding:11px;font:inherit}
+.count{color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:10px}
+.item{min-width:0;min-height:142px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px 7px;border:1px solid #806039;border-radius:10px;background:linear-gradient(145deg,#403323,#211a13);text-align:center}
+.item img{width:64px;height:64px;object-fit:contain;image-rendering:auto;filter:drop-shadow(0 3px 4px #000b)}
+.item span{font-size:12px;line-height:1.25;overflow-wrap:anywhere;color:#f1dfbd}
+.back{display:inline-block;margin-top:20px;color:var(--gold2)}
+</style>
+</head>
+<body>
+<header><h1>Boss-iconen controleren</h1><p>Alle 71 huidige PNG-bestanden uit assets/bosses. Vergroot/verklein of filter op naam; de afbeeldingen zelf zijn niet aangepast.</p></header>
+<main>
+<div class="tools"><input id="filter" type="search" placeholder="Zoek een boss…" aria-label="Zoek een boss"><span class="count" id="count">71 iconen</span></div>
+<div class="grid" id="grid">
+<article class="item" data-name="abyssal sire.png"><img loading="lazy" src="./assets/bosses/abyssal_sire.png" alt="abyssal sire.png"><span>abyssal sire.png</span></article>
+<article class="item" data-name="abyssal sire.png"><img loading="lazy" src="./assets/bosses/abyssal-sire.png" alt="abyssal sire.png"><span>abyssal sire.png</span></article>
+<article class="item" data-name="alchemical hydra.png"><img loading="lazy" src="./assets/bosses/alchemical_hydra.png" alt="alchemical hydra.png"><span>alchemical hydra.png</span></article>
+<article class="item" data-name="amoxliatl.png"><img loading="lazy" src="./assets/bosses/amoxliatl.png" alt="amoxliatl.png"><span>amoxliatl.png</span></article>
+<article class="item" data-name="araxxor.png"><img loading="lazy" src="./assets/bosses/araxxor.png" alt="araxxor.png"><span>araxxor.png</span></article>
+<article class="item" data-name="artio.png"><img loading="lazy" src="./assets/bosses/artio.png" alt="artio.png"><span>artio.png</span></article>
+<article class="item" data-name="barrows chests.png"><img loading="lazy" src="./assets/bosses/barrows_chests.png" alt="barrows chests.png"><span>barrows chests.png</span></article>
+<article class="item" data-name="brutus.png"><img loading="lazy" src="./assets/bosses/brutus.png" alt="brutus.png"><span>brutus.png</span></article>
+<article class="item" data-name="bryophyta.png"><img loading="lazy" src="./assets/bosses/bryophyta.png" alt="bryophyta.png"><span>bryophyta.png</span></article>
+<article class="item" data-name="callisto.png"><img loading="lazy" src="./assets/bosses/callisto.png" alt="callisto.png"><span>callisto.png</span></article>
+<article class="item" data-name="calvarion.png"><img loading="lazy" src="./assets/bosses/calvarion.png" alt="calvarion.png"><span>calvarion.png</span></article>
+<article class="item" data-name="cerberus.png"><img loading="lazy" src="./assets/bosses/cerberus.png" alt="cerberus.png"><span>cerberus.png</span></article>
+<article class="item" data-name="chambers of xeric challenge mode.png"><img loading="lazy" src="./assets/bosses/chambers_of_xeric_challenge_mode.png" alt="chambers of xeric challenge mode.png"><span>chambers of xeric challenge mode.png</span></article>
+<article class="item" data-name="chambers of xeric.png"><img loading="lazy" src="./assets/bosses/chambers_of_xeric.png" alt="chambers of xeric.png"><span>chambers of xeric.png</span></article>
+<article class="item" data-name="chaos elemental.png"><img loading="lazy" src="./assets/bosses/chaos_elemental.png" alt="chaos elemental.png"><span>chaos elemental.png</span></article>
+<article class="item" data-name="chaos fanatic.png"><img loading="lazy" src="./assets/bosses/chaos_fanatic.png" alt="chaos fanatic.png"><span>chaos fanatic.png</span></article>
+<article class="item" data-name="commander zilyana.png"><img loading="lazy" src="./assets/bosses/commander_zilyana.png" alt="commander zilyana.png"><span>commander zilyana.png</span></article>
+<article class="item" data-name="corporeal beast.png"><img loading="lazy" src="./assets/bosses/corporeal_beast.png" alt="corporeal beast.png"><span>corporeal beast.png</span></article>
+<article class="item" data-name="crazy archaeologist.png"><img loading="lazy" src="./assets/bosses/crazy_archaeologist.png" alt="crazy archaeologist.png"><span>crazy archaeologist.png</span></article>
+<article class="item" data-name="dagannoth prime.png"><img loading="lazy" src="./assets/bosses/dagannoth_prime.png" alt="dagannoth prime.png"><span>dagannoth prime.png</span></article>
+<article class="item" data-name="dagannoth rex.png"><img loading="lazy" src="./assets/bosses/dagannoth_rex.png" alt="dagannoth rex.png"><span>dagannoth rex.png</span></article>
+<article class="item" data-name="dagannoth supreme.png"><img loading="lazy" src="./assets/bosses/dagannoth_supreme.png" alt="dagannoth supreme.png"><span>dagannoth supreme.png</span></article>
+<article class="item" data-name="deranged archaeologist.png"><img loading="lazy" src="./assets/bosses/deranged_archaeologist.png" alt="deranged archaeologist.png"><span>deranged archaeologist.png</span></article>
+<article class="item" data-name="doom of mokhaiotl.png"><img loading="lazy" src="./assets/bosses/doom_of_mokhaiotl.png" alt="doom of mokhaiotl.png"><span>doom of mokhaiotl.png</span></article>
+<article class="item" data-name="duke sucellus.png"><img loading="lazy" src="./assets/bosses/duke_sucellus.png" alt="duke sucellus.png"><span>duke sucellus.png</span></article>
+<article class="item" data-name="general graardor.png"><img loading="lazy" src="./assets/bosses/general_graardor.png" alt="general graardor.png"><span>general graardor.png</span></article>
+<article class="item" data-name="giant mole.png"><img loading="lazy" src="./assets/bosses/giant_mole.png" alt="giant mole.png"><span>giant mole.png</span></article>
+<article class="item" data-name="grotesque guardians.png"><img loading="lazy" src="./assets/bosses/grotesque_guardians.png" alt="grotesque guardians.png"><span>grotesque guardians.png</span></article>
+<article class="item" data-name="hespori.png"><img loading="lazy" src="./assets/bosses/hespori.png" alt="hespori.png"><span>hespori.png</span></article>
+<article class="item" data-name="kalphite queen.png"><img loading="lazy" src="./assets/bosses/kalphite_queen.png" alt="kalphite queen.png"><span>kalphite queen.png</span></article>
+<article class="item" data-name="king black dragon.png"><img loading="lazy" src="./assets/bosses/king_black_dragon.png" alt="king black dragon.png"><span>king black dragon.png</span></article>
+<article class="item" data-name="kraken.png"><img loading="lazy" src="./assets/bosses/kraken.png" alt="kraken.png"><span>kraken.png</span></article>
+<article class="item" data-name="kreearra.png"><img loading="lazy" src="./assets/bosses/kreearra.png" alt="kreearra.png"><span>kreearra.png</span></article>
+<article class="item" data-name="kril tsutsaroth.png"><img loading="lazy" src="./assets/bosses/kril_tsutsaroth.png" alt="kril tsutsaroth.png"><span>kril tsutsaroth.png</span></article>
+<article class="item" data-name="lunar chests.png"><img loading="lazy" src="./assets/bosses/lunar_chests.png" alt="lunar chests.png"><span>lunar chests.png</span></article>
+<article class="item" data-name="maggot king.png"><img loading="lazy" src="./assets/bosses/maggot_king.png" alt="maggot king.png"><span>maggot king.png</span></article>
+<article class="item" data-name="mimic.png"><img loading="lazy" src="./assets/bosses/mimic.png" alt="mimic.png"><span>mimic.png</span></article>
+<article class="item" data-name="nex.png"><img loading="lazy" src="./assets/bosses/nex.png" alt="nex.png"><span>nex.png</span></article>
+<article class="item" data-name="nightmare.png"><img loading="lazy" src="./assets/bosses/nightmare.png" alt="nightmare.png"><span>nightmare.png</span></article>
+<article class="item" data-name="obor.png"><img loading="lazy" src="./assets/bosses/obor.png" alt="obor.png"><span>obor.png</span></article>
+<article class="item" data-name="phantom muspah.png"><img loading="lazy" src="./assets/bosses/phantom_muspah.png" alt="phantom muspah.png"><span>phantom muspah.png</span></article>
+<article class="item" data-name="phosanis nightmare.png"><img loading="lazy" src="./assets/bosses/phosanis_nightmare.png" alt="phosanis nightmare.png"><span>phosanis nightmare.png</span></article>
+<article class="item" data-name="sarachnis.png"><img loading="lazy" src="./assets/bosses/sarachnis.png" alt="sarachnis.png"><span>sarachnis.png</span></article>
+<article class="item" data-name="scorpia.png"><img loading="lazy" src="./assets/bosses/scorpia.png" alt="scorpia.png"><span>scorpia.png</span></article>
+<article class="item" data-name="scurrius.png"><img loading="lazy" src="./assets/bosses/scurrius.png" alt="scurrius.png"><span>scurrius.png</span></article>
+<article class="item" data-name="shellbane gryphon.png"><img loading="lazy" src="./assets/bosses/shellbane_gryphon.png" alt="shellbane gryphon.png"><span>shellbane gryphon.png</span></article>
+<article class="item" data-name="skotizo.png"><img loading="lazy" src="./assets/bosses/skotizo.png" alt="skotizo.png"><span>skotizo.png</span></article>
+<article class="item" data-name="sol heredit.png"><img loading="lazy" src="./assets/bosses/sol_heredit.png" alt="sol heredit.png"><span>sol heredit.png</span></article>
+<article class="item" data-name="spindel.png"><img loading="lazy" src="./assets/bosses/spindel.png" alt="spindel.png"><span>spindel.png</span></article>
+<article class="item" data-name="tempoross.png"><img loading="lazy" src="./assets/bosses/tempoross.png" alt="tempoross.png"><span>tempoross.png</span></article>
+<article class="item" data-name="the corrupted gauntlet.png"><img loading="lazy" src="./assets/bosses/the_corrupted_gauntlet.png" alt="the corrupted gauntlet.png"><span>the corrupted gauntlet.png</span></article>
+<article class="item" data-name="the gauntlet.png"><img loading="lazy" src="./assets/bosses/the_gauntlet.png" alt="the gauntlet.png"><span>the gauntlet.png</span></article>
+<article class="item" data-name="the hueycoatl.png"><img loading="lazy" src="./assets/bosses/the_hueycoatl.png" alt="the hueycoatl.png"><span>the hueycoatl.png</span></article>
+<article class="item" data-name="the leviathan.png"><img loading="lazy" src="./assets/bosses/the_leviathan.png" alt="the leviathan.png"><span>the leviathan.png</span></article>
+<article class="item" data-name="the royal titans.png"><img loading="lazy" src="./assets/bosses/the_royal_titans.png" alt="the royal titans.png"><span>the royal titans.png</span></article>
+<article class="item" data-name="the whisperer.png"><img loading="lazy" src="./assets/bosses/the_whisperer.png" alt="the whisperer.png"><span>the whisperer.png</span></article>
+<article class="item" data-name="theatre of blood hard mode.png"><img loading="lazy" src="./assets/bosses/theatre_of_blood_hard_mode.png" alt="theatre of blood hard mode.png"><span>theatre of blood hard mode.png</span></article>
+<article class="item" data-name="theatre of blood.png"><img loading="lazy" src="./assets/bosses/theatre_of_blood.png" alt="theatre of blood.png"><span>theatre of blood.png</span></article>
+<article class="item" data-name="thermonuclear smoke devil.png"><img loading="lazy" src="./assets/bosses/thermonuclear_smoke_devil.png" alt="thermonuclear smoke devil.png"><span>thermonuclear smoke devil.png</span></article>
+<article class="item" data-name="tombs of amascut expert.png"><img loading="lazy" src="./assets/bosses/tombs_of_amascut_expert.png" alt="tombs of amascut expert.png"><span>tombs of amascut expert.png</span></article>
+<article class="item" data-name="tombs of amascut.png"><img loading="lazy" src="./assets/bosses/tombs_of_amascut.png" alt="tombs of amascut.png"><span>tombs of amascut.png</span></article>
+<article class="item" data-name="tzkal zuk.png"><img loading="lazy" src="./assets/bosses/tzkal_zuk.png" alt="tzkal zuk.png"><span>tzkal zuk.png</span></article>
+<article class="item" data-name="tztok jad.png"><img loading="lazy" src="./assets/bosses/tztok_jad.png" alt="tztok jad.png"><span>tztok jad.png</span></article>
+<article class="item" data-name="vardorvis.png"><img loading="lazy" src="./assets/bosses/vardorvis.png" alt="vardorvis.png"><span>vardorvis.png</span></article>
+<article class="item" data-name="venenatis.png"><img loading="lazy" src="./assets/bosses/venenatis.png" alt="venenatis.png"><span>venenatis.png</span></article>
+<article class="item" data-name="vetion.png"><img loading="lazy" src="./assets/bosses/vetion.png" alt="vetion.png"><span>vetion.png</span></article>
+<article class="item" data-name="vorkath.png"><img loading="lazy" src="./assets/bosses/vorkath.png" alt="vorkath.png"><span>vorkath.png</span></article>
+<article class="item" data-name="wintertodt.png"><img loading="lazy" src="./assets/bosses/wintertodt.png" alt="wintertodt.png"><span>wintertodt.png</span></article>
+<article class="item" data-name="yama.png"><img loading="lazy" src="./assets/bosses/yama.png" alt="yama.png"><span>yama.png</span></article>
+<article class="item" data-name="zalcano.png"><img loading="lazy" src="./assets/bosses/zalcano.png" alt="zalcano.png"><span>zalcano.png</span></article>
+<article class="item" data-name="zulrah.png"><img loading="lazy" src="./assets/bosses/zulrah.png" alt="zulrah.png"><span>zulrah.png</span></article>
+</div>
+<a class="back" href="./">← Terug naar het OSRS-dashboard</a>
+</main>
+<script>
+const filter=document.getElementById('filter'),items=[...document.querySelectorAll('.item')],count=document.getElementById('count');
+filter.addEventListener('input',()=>{const q=filter.value.trim().toLowerCase();let n=0;for(const item of items){const show=item.dataset.name.includes(q);item.hidden=!show;if(show)n++}count.textContent=n+' van '+items.length+' iconen'});
+</script>
+</body></html>
