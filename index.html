@@ -204,9 +204,12 @@ function classifyActivity(a){
  }
  const isLevel=/level|skill/.test(t)||(/level|skill/i.test(String(a.category||d.category||'')))||!!skill&&level>0;
  if(isLevel){
-  const skillKey=String(skill||'').toLowerCase().replaceAll(' ','_');
-  const skillName=skill?nice(String(skill)):'Skill';
-  return {icon:'🏆',image:skill?skillIcon(skillKey):'',title:level>=99?'LEVEL 99 BEHAALD!':skillName+' level omhoog',detail:[skillName,level?'Nieuw level: '+level:''].filter(Boolean).join(' · ')||'Skill level omhoog',special:level>=99?'LEVEL 99':null};
+  // RuneProfile level_up events store the skill and reached level in data.name/data.level.
+  const levelSkill=t==='level_up'?String(d.name||''):String(skill||'');
+  const levelNumber=t==='level_up'?Number(d.level||level):level;
+  const skillKey=levelSkill.toLowerCase().replaceAll(' ','_');
+  const skillName=levelSkill?nice(levelSkill):'Skill';
+  return {icon:'🏆',image:levelSkill?skillIcon(skillKey):'',title:levelNumber>=99?'LEVEL 99 BEHAALD!':skillName+' level omhoog',detail:[skillName,levelNumber?'Nieuw level: '+levelNumber:''].filter(Boolean).join(' · ')||'Skill level omhoog',special:levelNumber>=99?'LEVEL 99':null};
  }
  const isCombat=/combat.*achievement|achievement.*combat|combat_ach|ca_/.test(t)||/combat.?achievement/i.test(String(d.category||en.category||''));
  if(isCombat){
