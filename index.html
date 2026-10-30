@@ -128,7 +128,7 @@ function renderRecentClog(activities){
  $('clogRecent').innerHTML=recent.map(a=>{const d=a.data||{},en=a.enriched||{},name=d.itemName||d.item_name||d.name||en.name||'Collection Log-item',page=d.pageName||d.page||en.page||'Collection Log';return '<div class="recent-item"><strong style="color:var(--gold2)">'+escapeHtml(name)+'</strong><div class="small">'+escapeHtml(page)+' · '+(a.createdAt?new Date(a.createdAt).toLocaleString('nl-NL'):'datum onbekend')+'</div></div>'}).join('');
 }
 $('clogTabs').addEventListener('click',e=>{const b=e.target.closest('[data-clogtab]');if(b){clogTab=b.dataset.clogtab;renderClogPages()}});$('clogPages').addEventListener('click',e=>{const b=e.target.closest('[data-clogpage]');if(!b||!clogData)return;const tab=(clogData.tabs||[]).find(t=>t.name===clogTab),page=tab?.pages?.[Number(b.dataset.clogpage)];if(!page)return;$('clogSelectedTitle').textContent=page.name;$('clogSelectedTitle').dataset.page=page.name;showClogPage()});
-$('clogPage').addEventListener('change',showClogPage);$('clogSearch').addEventListener('input',showClogPage);$('clogRefresh').addEventListener('click',loadCollection);
+$('clogSearch').addEventListener('input',showClogPage);$('clogRefresh').addEventListener('click',loadCollection);
 renderGoals();renderWealth();load();
 if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
