@@ -332,7 +332,7 @@ $('clogTabs').addEventListener('click',e=>{const b=e.target.closest('[data-clogt
 $('clogSearch').addEventListener('input',showClogPage);$('clogRefresh').addEventListener('click',loadCollection);
 
 const GE='https://prices.runescape.wiki/api/v2/osrs';
-let geMapping=[],geLatest={},geHistory={},geLoaded=false,geVisible=80,geSelected=null,geLoading=false;
+let geMapping=[],geLatest={},geHistory={},geVolumes={},geLoaded=false,geVisible=80,geSelected=null,geLoading=false;
 const geFavs=()=>{try{return JSON.parse(localStorage.getItem('db-ge-favorites')||'[]')}catch{return []}};
 const geSaveFavs=a=>localStorage.setItem('db-ge-favorites',JSON.stringify(a));
 const geNum=n=>n==null?'—':fmt(Math.round(Number(n)));
@@ -342,7 +342,7 @@ async function loadGE(force=false){
  if(geLoading)return;geLoading=true;$('geRefresh').disabled=true;$('geStatus').textContent='OSRS Wiki-marktdata ophalen…';
  try{
   if(force||!geMapping.length){const m=await geFetch('/mapping');geMapping=Array.isArray(m)?m:(m.data||[])}
-  if(force||!Object.keys(geLatest).length){const p=await geFetch('/latest');geLatest=p.data||p}
+  if(force||!Object.keys(geLatest).length){const p=await geFetch('/latest');geLatest=p.data||p}if(force||!Object.keys(geVolumes).length){const v=await geFetch('/5m');for(const row of (v.data||[]))geVolumes[row.id]=row;}
   geLoaded=true;geVisible=80;
   $('geItemCount').textContent=fmt(geMapping.length);$('gePricedCount').textContent=fmt(Object.keys(geLatest).length);$('geUpdated').textContent=new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'});
   $('geStatus').textContent='Verbonden met OSRS Wiki · '+new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'})+' · prijzen worden periodiek ververst';
@@ -354,13 +354,13 @@ function geItems(){
  const q=$('geSearch').value.trim().toLowerCase(),fav=geFavs(),members=$('geMembersOnly').checked;
  let a=geMapping.filter(i=>(!q||String(i.name).toLowerCase().includes(q)||String(i.id).includes(q))&&(!members||i.members)&&(!$('geFavoritesOnly').checked||fav.includes(Number(i.id))));
  const sort=$('geSort').value;
- a.sort((x,y)=>{const p=geLatest[x.id]||{},r=geLatest[y.id]||{};if(sort==='high')return (r.high||0)-(p.high||0);if(sort==='low')return (r.low||0)-(p.low||0);if(sort==='volume')return ((geHistory[x.id]?.volume)||0)-((geHistory[y.id]?.volume)||0);if(sort==='margin')return ((r.high||0)-(r.low||0))-((p.high||0)-(p.low||0));return x.name.localeCompare(y.name)});
+ a.sort((x,y)=>{const p=geLatest[x.id]||{},r=geLatest[y.id]||{};if(sort==='high')return (r.high||0)-(p.high||0);if(sort==='low')return (r.low||0)-(p.low||0);if(sort==='volume')return ((geVolumes[y.id]?.volume)||0)-((geVolumes[x.id]?.volume)||0);if(sort==='margin')return ((r.high||0)-(r.low||0))-((p.high||0)-(p.low||0));return x.name.localeCompare(y.name)});
  return a;
 }
 function geIcon(i){return i.icon?'https://oldschool.runescape.wiki/images/'+encodeURIComponent(i.icon.replaceAll(' ','_')):''}
 function renderGERows(){
  const a=geItems(),shown=a.slice(0,geVisible),favs=geFavs();$('geResultCount').textContent=fmt(a.length)+' resultaten';
- $('geRows').innerHTML=shown.map(i=>{const p=geLatest[i.id]||{},spread=p.high!=null&&p.low!=null?p.high-p.low:null,vol=geHistory[i.id]?.volume;return '<tr><td><div class="ge-item"><img loading="lazy" src="'+geIcon(i)+'" alt="" onerror="this.style.visibility=\'hidden\'"><button data-ge-item="'+i.id+'">'+escapeHtml(i.name)+'</button></div></td><td class="ge-price-high">'+geNum(p.high)+'</td><td class="ge-price-low">'+geNum(p.low)+'</td><td>'+geNum(spread)+'</td><td>'+(vol==null?'—':fmt(vol))+'</td><td><button class="ge-fav '+(favs.includes(Number(i.id))?'on':'')+'" data-ge-fav="'+i.id+'" aria-label="Favoriet">★</button></td></tr>'}).join('')||'<tr><td colspan="6" class="empty">Geen items gevonden.</td></tr>';
+ $('geRows').innerHTML=shown.map(i=>{const p=geLatest[i.id]||{},spread=p.high!=null&&p.low!=null?p.high-p.low:null,vol=geVolumes[i.id]?.volume;return '<tr><td><div class="ge-item"><img loading="lazy" src="'+geIcon(i)+'" alt="" onerror="this.style.visibility=\'hidden\'"><button data-ge-item="'+i.id+'">'+escapeHtml(i.name)+'</button></div></td><td class="ge-price-high">'+geNum(p.high)+'</td><td class="ge-price-low">'+geNum(p.low)+'</td><td>'+geNum(spread)+'</td><td>'+(vol==null?'—':fmt(vol))+'</td><td><button class="ge-fav '+(favs.includes(Number(i.id))?'on':'')+'" data-ge-fav="'+i.id+'" aria-label="Favoriet">★</button></td></tr>'}).join('')||'<tr><td colspan="6" class="empty">Geen items gevonden.</td></tr>';
  $('geMore').classList.toggle('hidden',shown.length>=a.length);
 }
 function geChart(points){
