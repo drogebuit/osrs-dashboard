@@ -32,13 +32,13 @@ button,input,select{font:inherit}button{cursor:pointer;color:inherit}.top{positi
 .clog-detail-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .clog-detail-head input{width:min(210px,55%);min-width:0;background:#19130d;border:1px solid #927044;border-radius:5px;padding:7px 9px;color:#fff0cf}
 .clog-detail-body{padding:10px;min-height:190px}
-.clog-items{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
-.clog-item{position:relative;min-height:104px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;padding:8px 5px;background:linear-gradient(145deg,#3b3023,#211a13);border:1px solid #69502f;border-radius:5px;text-align:center}
-.clog-item img{width:44px;height:44px;object-fit:contain;image-rendering:auto;filter:drop-shadow(0 2px 3px #0009)}
-.clog-item span{font-size:11px;line-height:1.25;color:#f1dfbd}
+.clog-items{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:9px}
+.clog-item{position:relative;min-height:126px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px;padding:10px 6px;background:linear-gradient(145deg,#403323,#211a13);border:1px solid #806039;border-radius:6px;text-align:center;box-shadow:inset 0 1px #ffffff0b,0 3px 8px #0003;transition:border-color .15s,background .15s}
+.clog-item img{width:52px;height:52px;object-fit:contain;image-rendering:auto;filter:drop-shadow(0 3px 4px #000b)}
+.clog-item span{font-size:11px;line-height:1.25;color:#f1dfbd;min-height:27px;display:flex;align-items:center;justify-content:center}
 .clog-item b{position:absolute;right:5px;top:4px;font-size:10px;color:#f5d17d}
 .clog-item.missing{opacity:.48;filter:grayscale(.8)}
-.clog-item:not(.missing){border-color:#9a793f}
+.clog-item:not(.missing){border-color:#b28a49;background:linear-gradient(145deg,#514027,#292015)}
 .clog-empty{padding:24px 10px;text-align:center;color:#b9a88d;font-size:13px}
 @media(max-width:620px){.clog-browser{grid-template-columns:1fr}.clog-page-list{max-height:180px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.clog-page-btn{font-size:11px}.clog-detail-head{align-items:flex-start;flex-direction:column}.clog-detail-head input{width:100%}.clog-items{grid-template-columns:repeat(3,minmax(0,1fr))}.clog-item{min-height:95px}.clog-item img{width:38px;height:38px}}
 </style>
@@ -91,7 +91,7 @@ function renderWealth(){const a=read('db-wealth',[]);$('wealthTotal').textConten
 $('wealthForm').addEventListener('submit',e=>{e.preventDefault();const a=read('db-wealth',[]);a.push({name:$('itemName').value.trim(),value:Number($('itemValue').value)});write('db-wealth',a);$('itemName').value='';$('itemValue').value='';renderWealth()});
 $('wealthList').addEventListener('click',e=>{if(e.target.dataset.delitem!==undefined){const a=read('db-wealth',[]);a.splice(Number(e.target.dataset.delitem),1);write('db-wealth',a);renderWealth()}});
 let clogData=null,clogTab='Bosses',clogLoaded=false;
-const itemIcon=id=>'https://cdn.runeprofile.com/items/'+id+'.png';
+const itemIcon=id=>'https://static.runelite.net/cache/item/icon/'+encodeURIComponent(id)+'.png';
 async function loadCollection(){
  $('clogItems').innerHTML='<div class="empty">Collection Log ophalen…</div>';
  try{
