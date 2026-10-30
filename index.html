@@ -142,39 +142,79 @@ function firstValue(objects,keys){
  for(const obj of objects){if(!obj||typeof obj!=='object')continue;for(const key of keys){const value=obj[key];if(value!==undefined&&value!==null&&value!=='')return value}}
  return '';
 }
+function deepActivityValue(objects,keys){
+ const queue=objects.filter(Boolean).map(value=>({value,depth:0})),seen=new Set();
+ while(queue.length){
+  const {value,depth}=queue.shift();
+  if(!value||typeof value!=='object'||seen.has(value))continue;
+  seen.add(value);
+  for(const key of keys){const v=value[key];if(v!==undefined&&v!==null&&v!=='')return v}
+  if(depth<4)for(const v of Object.values(value))if(v&&typeof v==='object')queue.push({value:v,depth:depth+1});
+ }
+ return '';
+}
+function activityObjects(d,en,a){
+ const out=[d,en,a];
+ for(const root of [...out]){
+  if(!root||typeof root!=='object')continue;
+  for(const key of ['item','drop','loot','reward','obtainedItem','obtained_item','newItem','new_item','achievement','combatAchievement','combat_achievement','skill','levelUp','level_up','details','metadata']){
+   if(root[key]&&typeof root[key]==='object')out.push(root[key]);
+  }
+ }
+ return [...new Set(out)];
+}
 function itemFromActivity(d,en,a){
- const candidates=[d.item,d.drop,d.loot,d.reward,en.item,en.drop,en.loot,a.item,a.drop];
- for(const item of candidates){if(item&&typeof item==='object')return item}
- const lists=[d.items,d.drops,d.lootItems,en.items,en.drops];
- for(const list of lists){if(Array.isArray(list)&&list.length&&list[0]&&typeof list[0]==='object')return list[0]}
- return {};
+ const keys=['item','drop','loot','reward','obtainedItem','obtained_item','newItem','new_item','itemObtained','item_obtained'];
+ for(const root of [d,en,a]){
+  if(!root||typeof root!=='object')continue;
+  for(const key of keys){const value=root[key];if(value&&typeof value==='object')return value}
+ }
+ const objects=activityObjects(d,en,a);
+ const id=deepActivityValue(objects,['itemId','item_id','itemID']);
+ const name=deepActivityValue(objects,['itemName','item_name','displayName','display_name']);
+ return id||name?{id,name}: {};
 }
 function classifyActivity(a){
- const {d,en,type}=activityPayload(a),t=type.toLowerCase();
- const item=itemFromActivity(d,en,a),objects=[d,en,item,a];
- const rawSkill=firstValue(objects,['skill','skillName','skill_name','skill_name_formatted']);
- const skill=typeof rawSkill==='object'?firstValue([rawSkill],['name','skill','key']):rawSkill;
- const level=Number(firstValue(objects,['level','newLevel','new_level','toLevel','to_level','currentLevel','current_level'])||0);
- const rawName=firstValue([item,d,en,a],['itemName','item_name','name','displayName','display_name','questName','quest','title']);
- const itemName=typeof rawName==='object'?firstValue([rawName],['name','displayName']):rawName;
- const itemId=Number(firstValue([item],['id','itemId','item_id','itemID'])||firstValue([d,en],['itemId','item_id','itemID'])||0);
- const quantity=firstValue([item,d,en,a],['quantity','amount','count','qty']);
- const value=Number(firstValue([item,d,en,a],['value','price','gePrice','ge_price','marketPrice','market_price'])||0);
- const isLevel=/level|skill/.test(t)||!!rawSkill&&level>0;
+ const {d,en,type}=activityPayload(a),t=type.toLowerCase().replaceAll('-','_').replaceAll(' ','_');
+ const item=itemFromActivity(d,en,a),objects=activityObjects(d,en,a),all=[item,...objects];
+ const rawSkill=deepActivityValue(all,['skillName','skill_name','skill_name_formatted','skill']);
+ const skill=typeof rawSkill==='object'?deepActivityValue([rawSkill],['name','displayName','key']):rawSkill;
+ const level=Number(deepActivityValue(all,['newLevel','new_level','toLevel','to_level','currentLevel','current_level','level'])||0);
+ const rawName=deepActivityValue([item,...objects],['itemName','item_name','name','displayName','display_name','questName','quest','title']);
+ const itemName=typeof rawName==='object'?deepActivityValue([rawName],['name','displayName','title']):rawName;
+ const itemId=Number(deepActivityValue([item,...objects],['itemId','item_id','itemID','id'])||0);
+ const quantity=deepActivityValue(all,['quantity','amount','count','qty']);
+ const value=Number(deepActivityValue(all,['value','price','gePrice','ge_price','marketPrice','market_price'])||0);
+ const isLevel=/level|skill/.test(t)||(/level|skill/i.test(String(a.category||d.category||'')))||!!skill&&level>0;
  if(isLevel){
+  const skillKey=String(skill||'').toLowerCase().replaceAll(' ','_');
   const skillName=skill?nice(String(skill)):'Skill';
-  return {icon:'🏆',image:skill?skillIcon(String(skill).toLowerCase().replaceAll(' ','_')):'',title:level>=99?'LEVEL 99 BEHAALD!':skillName+' level omhoog',detail:[skillName,level?'Level '+level:''].filter(Boolean).join(' · '),special:level>=99?'LEVEL 99':null};
+  return {icon:'🏆',image:skill?skillIcon(skillKey):'',title:level>=99?'LEVEL 99 BEHAALD!':skillName+' level omhoog',detail:[skillName,level?'Nieuw level: '+level:''].filter(Boolean).join(' · ')||'Skill level omhoog',special:level>=99?'LEVEL 99':null};
+ }
+ const isCombat=/combat.*achievement|achievement.*combat|combat_ach|ca_/.test(t)||/combat.?achievement/i.test(String(d.category||en.category||''));
+ if(isCombat){
+  const achievement=deepActivityValue(all,['achievementName','achievement_name','taskName','task_name','name','title','description']);
+  const tier=deepActivityValue(all,['tier','difficulty','combatAchievementTier','combat_achievement_tier']);
+  const points=deepActivityValue(all,['points','score','value']);
+  const detail=[typeof achievement==='object'?deepActivityValue([achievement],['name','title']):achievement,tier?nice(String(tier))+' tier':'',points?points+' punten':''].filter(Boolean).join(' · ');
+  const tierKey=String(tier||'').toLowerCase();
+  const tierImage=tierKey?'https://oldschool.runescape.wiki/images/Combat_Achievements_-_'+encodeURIComponent(nice(tierKey).replaceAll(' ','_'))+'.png':'https://oldschool.runescape.wiki/images/Combat_Achievements_icon.png';
+  return {icon:'⚔',image:tierImage,title:'Combat achievement behaald',detail:detail||'Nieuwe Combat Achievement geregistreerd',special:tier?nice(String(tier)).toUpperCase()+' TIER':'COMBAT ACHIEVEMENT'};
  }
  if(/collection|clog/.test(t)||/collection.?log/i.test(String(d.category||''))){
   return {icon:'💎',image:itemId?itemIcon(itemId):'',title:'NIEUWE COLLECTION LOG-DROP!',detail:[itemName||'Nieuw item geregistreerd',quantity?'×'+quantity:''].filter(Boolean).join(' · '),special:'COLLECTION LOG'};
+ }
+ const isNewItem=/new_item|item_obtained|item_received|obtained_item|item.*obtained|obtained.*item/.test(t)||/item.?obtained/i.test(String(d.category||en.category||''));
+ if(isNewItem){
+  return {icon:'🎁',image:itemId?itemIcon(itemId):'',title:'Nieuw item verkregen',detail:[itemName||'Item geregistreerd',quantity?'×'+quantity:''].filter(Boolean).join(' · ')||'Nieuw item verkregen',special:'NEW ITEM'};
  }
  if(/drop|loot/.test(t)){
   return {icon:'💎',image:itemId?itemIcon(itemId):'',title:value>=1000000?'BIJZONDERE DROP!':'Nieuwe drop verkregen',detail:[itemName,quantity?'×'+quantity:'',value?fmt(value)+' gp':''].filter(Boolean).join(' · ')||'Drop geregistreerd',special:value>=1000000?'HIGH VALUE':null};
  }
  if(/quest/.test(t))return {icon:'📜',title:'Quest voltooid',detail:itemName,special:null};
- if(/combat|achievement|task/.test(t))return {icon:'⚔',title:'Combat achievement',detail:itemName||d.task||d.title||'',special:/grandmaster|master/i.test(JSON.stringify(d))?'MILESTONE':null};
- if(/death|kill|boss/.test(t))return {icon:'☠',title:'Boss-activiteit',detail:d.boss||itemName||'',special:null};
- return {icon:'✦',title:nice(type),detail:itemName||d.title||d.description||en.description||a.description||'',special:null};
+ if(/achievement|combat|task/.test(t))return {icon:'⚔',image:'https://oldschool.runescape.wiki/images/Combat_Achievements_icon.png',title:'Combat achievement behaald',detail:itemName||deepActivityValue(all,['task','description','title'])||'Achievement geregistreerd',special:'COMBAT ACHIEVEMENT'};
+ if(/death|kill|boss/.test(t))return {icon:'☠',title:'Boss-activiteit',detail:deepActivityValue(all,['boss','name'])||itemName,special:null};
+ return {icon:'✦',title:nice(type),detail:itemName||deepActivityValue(all,['title','description'])||'',special:null};
 }
 function updateNotifyButton(){
  const enabled=localStorage.getItem('db-notifications')==='on'&&('Notification' in window)&&Notification.permission==='granted';
