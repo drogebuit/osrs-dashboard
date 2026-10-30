@@ -185,6 +185,15 @@ function classifyActivity(a){
  const itemId=Number(deepActivityValue([item],['id','itemId','item_id','itemID'])||deepActivityValue(objects,['itemId','item_id','itemID'])||0);
  const quantity=deepActivityValue(all,['quantity','amount','count','qty']);
  const value=Number(deepActivityValue(all,['value','price','gePrice','ge_price','marketPrice','market_price'])||0);
+ const isMilestone=/xp.*milestone|milestone.*xp|experience.*milestone|milestone.*experience/.test(t)||/xp.?milestone|experience.?milestone/i.test(String(d.category||en.category||''));
+ if(isMilestone){
+  const rawXp=deepActivityValue([d,en,a,...objects],['xp','experience','totalXp','total_xp','xpAmount','xp_amount','experienceGained','experience_gained','threshold','milestone']);
+  const xp=typeof rawXp==='object'?deepActivityValue([rawXp],['xp','experience','value','amount','threshold']):rawXp;
+  const xpNumber=Number(String(xp??'').replaceAll(',','').replaceAll('.',''));
+  const xpText=Number.isFinite(xpNumber)&&xpNumber>0?fmt(xpNumber)+' XP':(xp?String(xp)+' XP':'XP-aantal niet beschikbaar');
+  const milestoneSkill=skill?nice(String(skill))+' · ':'';
+  return {icon:'✨',title:'XP-mijlpaal behaald!',detail:milestoneSkill+xpText,special:'XP MILESTONE'};
+ }
  const isLevel=/level|skill/.test(t)||(/level|skill/i.test(String(a.category||d.category||'')))||!!skill&&level>0;
  if(isLevel){
   const skillKey=String(skill||'').toLowerCase().replaceAll(' ','_');
