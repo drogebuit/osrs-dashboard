@@ -1,0 +1,43 @@
+name: Test RuneLite boss sprite export
+
+on:
+  push:
+    paths:
+      - ".github/workflows/test-sprite-export.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch sample RuneLite boss sprites
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p sprite-test
+          for id in 4276 4279 4280; do
+            echo "Fetching sprite group $id"
+            curl --fail --location --retry 2 --retry-delay 2 \
+              --user-agent "DrogeBuit-OSRS-Dashboard/1.0" \
+              "https://api.runewiki.org/sprite/$id" \
+              --output "sprite-test/$id.png" \
+              --write-out "HTTP %{http_code}; content-type %{content_type}; bytes %{size_download}\n"
+            file "sprite-test/$id.png"
+            python - "$id" <<'PY'
+          import sys, struct
+          p = f"sprite-test/{sys.argv[1]}.png"
+          b = open(p, "rb").read(24)
+          if b[:8] != b"\x89PNG\r\n\x1a\n":
+              raise SystemExit(f"{p} is not a PNG")
+          print(f"{p}: {struct.unpack('>II', b[16:24])} pixels")
+          PY
+          done
+      - name: Upload test sprites
+        uses: actions/upload-artifact@v4
+        with:
+          name: boss-sprite-test
+          path: sprite-test/
+          retention-days: 1
