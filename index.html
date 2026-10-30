@@ -51,13 +51,13 @@ button,input,select{font:inherit}button{cursor:pointer;color:inherit}.top{positi
 @media(min-width:650px){.activity-entry{grid-template-columns:42px minmax(0,1fr);padding:14px 5px}.activity-icon{width:40px;height:40px}}
 .activity-actions{display:flex;gap:6px;flex-wrap:wrap}.activity-entry.highlight{margin:5px -7px;padding:12px 9px;border:1px solid #c99a49;border-radius:10px;background:linear-gradient(110deg,#5a401f88,#24190f)}.activity-entry.highlight .activity-icon{border-color:#e1b85d;background:linear-gradient(145deg,#8b6328,#3a2713);box-shadow:0 0 14px #d6a64c33}.activity-special{display:inline-block;margin-left:6px;padding:2px 6px;border-radius:10px;background:linear-gradient(#f5d88e,#b98232);color:#211506;font-size:8px;font-weight:900;letter-spacing:.08em;vertical-align:2px}.activity-actions .btn{font-size:11px;padding:7px 10px}
 
-/* Mobile: keep the full player portrait visible without squeezing the profile */
+/* Mobile: use the RuneProfile stats artwork as a full-width profile banner */
 @media(max-width:649px){
-  .hero-layout{grid-template-columns:minmax(0,1fr) 72px;gap:8px}
-  .hero-portrait{width:72px;min-height:118px;max-height:118px;align-self:start}
-  .hero-portrait img{object-fit:contain;object-position:center}
-  .hero-portrait:after{background:linear-gradient(0deg,#17110b66,transparent 35%)}
-  .portrait-caption{font-size:7px;bottom:5px}
+  .hero-layout{display:flex;flex-direction:column;gap:12px}
+  .hero-portrait{order:-1;display:block;width:100%;height:auto;min-height:0;max-height:none;aspect-ratio:16/9;align-self:stretch}
+  .hero-portrait img{object-fit:cover;object-position:center}
+  .hero-portrait:after{background:linear-gradient(0deg,#130d0877,transparent 30%)}
+  .portrait-caption{font-size:8px;bottom:7px}
 }
 </style>
 </head>
