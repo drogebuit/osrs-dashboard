@@ -157,7 +157,7 @@ function classifyActivity(a){
  const level=Number(firstValue(objects,['level','newLevel','new_level','toLevel','to_level','currentLevel','current_level'])||0);
  const rawName=firstValue([item,d,en,a],['itemName','item_name','name','displayName','display_name','questName','quest','title']);
  const itemName=typeof rawName==='object'?firstValue([rawName],['name','displayName']):rawName;
- const itemId=Number(firstValue([item,d,en,a],['itemId','item_id','id','itemID'])||0);
+ const itemId=Number(firstValue([item],['id','itemId','item_id','itemID'])||firstValue([d,en],['itemId','item_id','itemID'])||0);
  const quantity=firstValue([item,d,en,a],['quantity','amount','count','qty']);
  const value=Number(firstValue([item,d,en,a],['value','price','gePrice','ge_price','marketPrice','market_price'])||0);
  const isLevel=/level|skill/.test(t)||!!rawSkill&&level>0;
