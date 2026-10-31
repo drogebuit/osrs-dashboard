@@ -383,12 +383,12 @@ async function loadGE(force=false){
  if(geLoading)return;geLoading=true;$('geRefresh').disabled=true;$('geStatus').textContent='OSRS Wiki-marktdata ophalen…';
  try{
   if(force||!geMapping.length){const m=await geFetch('/mapping');geMapping=Array.isArray(m)?m:(m.data||[])}
-  if(force||!Object.keys(geLatest).length){const p=await geFetch('/latest');geLatest=p.data||p}if(force||!Object.keys(geVolumes).length){const v=await geFetch('/5m');for(const row of (v.data||[]))geVolumes[row.id]=row;}
+  if(force||!Object.keys(geLatest).length){const p=await geFetch('/latest');geLatest=p.data||p}if(force||!Object.keys(geVolumes).length){const v=await geFetch('/5m');const rows=v.data||{};if(Array.isArray(rows)){for(const row of rows)if(row&&row.id!=null)geVolumes[row.id]=row}else{for(const [id,row] of Object.entries(rows))if(row&&typeof row==='object')geVolumes[id]={...row,id:Number(id)}}}
   geLoaded=true;geVisible=80;
   $('geItemCount').textContent=fmt(geMapping.length);$('gePricedCount').textContent=fmt(Object.keys(geLatest).length);$('geUpdated').textContent=new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'});
   $('geStatus').textContent='Verbonden met OSRS Wiki · '+new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'})+' · prijzen worden periodiek ververst';
   renderGERows();
- }catch(e){$('geStatus').textContent='Grand Exchange-data kon niet worden geladen. Controleer je verbinding of probeer opnieuw.';$('geRows').innerHTML='<tr><td colspan="6" class="empty">OSRS Wiki API tijdelijk niet bereikbaar.</td></tr>'}
+ }catch(e){console.error('Grand Exchange laden mislukt:',e);$('geStatus').textContent='Grand Exchange-data kon niet worden geladen: '+(e?.message||'onbekende fout')+'. Probeer opnieuw.';$('geRows').innerHTML='<tr><td colspan="6" class="empty">OSRS Wiki API tijdelijk niet bereikbaar.</td></tr>'}
  finally{geLoading=false;$('geRefresh').disabled=false}
 }
 function geTax(price,exempt=false){if(exempt||!Number.isFinite(price)||price<=0)return 0;return Math.min(5000000,Math.floor(price*.02))}
