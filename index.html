@@ -125,28 +125,39 @@ function renderSkills(skills){
 function bossIcon(k){return './assets/bosses/'+String(k||'').toLowerCase()+'.png'}
 function renderBosses(bosses){const entries=Object.entries(bosses||{}).filter(([k,v])=>v&&Number(v.kills)>=0).sort((a,b)=>b[1].kills-a[1].kills);$('bossList').innerHTML=entries.map(([k,v])=>'<div class="line boss-line"><span class="boss-name"><img class="boss-icon" src="'+bossIcon(k)+'" alt="" loading="lazy" onerror="this.onerror=null;this.style.display=&quot;none&quot;;this.nextElementSibling.textContent=String.fromCodePoint(9760)"><i>☠</i><span>'+nice(k)+'</span></span><strong>'+fmt(v.kills)+' KC</strong></div>').join('')||'<div class="empty">Geen bossgegevens beschikbaar.</div>'}
 async function loadGains(){const period=$('period').value;$('gainList').textContent='Gains ophalen…';try{const g=await get(API+'/gained?period='+period),gs=g.data?.skills||{},ge=Object.entries(gs).filter(([k,v])=>k!=='overall'&&Number(v.experience?.gained)>0).sort((a,b)=>b[1].experience.gained-a[1].experience.gained);const total=Number(gs.overall?.experience?.gained)||ge.reduce((s,[k,v])=>s+Number(v.experience.gained||0),0);$('gainTotal').textContent=short(total);$('activeSkills').textContent=ge.length;$('gainList').innerHTML=ge.length?(()=>{const max=Math.max(...ge.map(([k,v])=>Number(v.experience.gained)));return ge.map(([k,v])=>'<div class="gainbar"><span>'+nice(k)+'</span><div class="bar"><i style="width:'+Math.max(2,Number(v.experience.gained)/max*100)+'%"></i></div><strong style="color:var(--green)">+'+short(v.experience.gained)+'</strong></div>').join('')})():'<div class="empty">Geen XP gains gevonden voor deze periode.</div>'}catch(e){$('gainTotal').textContent='—';$('activeSkills').textContent='—';$('gainList').textContent='Gains tijdelijk niet beschikbaar.'}}
-async function load(){ $('message').textContent='Gegevens ophalen…';$('message').className='notice';$('refresh').disabled=true;try{const p=await get(API);profile=p;const snap=p.latestSnapshot?.data||{},skills=snap.skills||{};$('name').textContent=p.displayName||p.username||'Droge Buit';$('updated').textContent='Laatst bijgewerkt: '+(p.updatedAt?new Date(p.updatedAt).toLocaleString('nl-NL'):'onbekend');const total=Number(skills.overall?.level)||0;$('totalLevel').textContent=fmt(total);$('totalProgress').style.width=Math.max(0,Math.min(100,total/2376*100))+'%';$('totalProgressText').textContent=fmt(total)+' / 2.376 total levels';$('totalXp').textContent=short(p.exp);$('combat').textContent=fmt(p.combatLevel);$('syncState').textContent='● PROFILE LOADED';$('ehp').textContent=Number(p.ehp||0).toFixed(1).replace('.',',');$('ehb').textContent=Number(p.ehb||0).toFixed(1).replace('.',',');$('ttm').textContent=p.ttm!=null?Math.round(p.ttm)+' u':'—';renderSkills(skills);renderBosses(snap.bosses||{});await loadGains();$('message').textContent='Profiel geladen. Data afkomstig van Wise Old Man.'}catch(e){$('syncState').textContent='● SYNC FAILED';$('syncState').style.color='#e58d78';$('message').textContent='Laden mislukt: '+e.message+'. Probeer het later opnieuw.';$('message').className='notice error';$('skillList').textContent='Geen gegevens geladen.'}finally{$('refresh').disabled=false}}
+async function load(source=null){ $('message').textContent='Gegevens ophalen…';$('message').className='notice';$('refresh').disabled=true;try{const p=source||await get(API);profile=p;const snap=p.latestSnapshot?.data||{},skills=snap.skills||{};$('name').textContent=p.displayName||p.username||'Droge Buit';$('updated').textContent='Laatst bijgewerkt: '+(p.updatedAt?new Date(p.updatedAt).toLocaleString('nl-NL'):'onbekend');const total=Number(skills.overall?.level)||0;$('totalLevel').textContent=fmt(total);$('totalProgress').style.width=Math.max(0,Math.min(100,total/2376*100))+'%';$('totalProgressText').textContent=fmt(total)+' / 2.376 total levels';$('totalXp').textContent=short(p.exp);$('combat').textContent=fmt(p.combatLevel);$('syncState').textContent='● PROFILE LOADED';$('ehp').textContent=Number(p.ehp||0).toFixed(1).replace('.',',');$('ehb').textContent=Number(p.ehb||0).toFixed(1).replace('.',',');$('ttm').textContent=p.ttm!=null?Math.round(p.ttm)+' u':'—';renderSkills(skills);renderBosses(snap.bosses||{});await loadGains();$('message').textContent='Profiel geladen. Data afkomstig van Wise Old Man.'}catch(e){$('syncState').textContent='● SYNC FAILED';$('syncState').style.color='#e58d78';$('message').textContent='Laden mislukt: '+e.message+'. Probeer het later opnieuw.';$('message').className='notice error';$('skillList').textContent='Geen gegevens geladen.'}finally{$('refresh').disabled=false}}
 async function updateWiseOldMan(){
  const button=$('refresh');
  if(button.disabled)return;
+ const previousSnapshot=profile?.latestSnapshot?.createdAt||null;
  button.disabled=true;button.textContent='↻ Updating…';
  $('syncState').textContent='● UPDATING PROFILE';$('syncState').style.color='';
- $('message').textContent='Wise Old Man haalt de nieuwste OSRS-hiscores op…';$('message').className='notice';
+ $('message').textContent='Updateverzoek naar Wise Old Man versturen…';$('message').className='notice';
  try{
   const response=await fetch(API,{method:'POST'});
+  let updated=null;
+  try{updated=await response.json()}catch{}
   if(!response.ok){
-   let detail='HTTP '+response.status;
-   try{const body=await response.json();if(body.message)detail=body.message}catch{}
-   if(response.status===429)detail='Wise Old Man geeft aan dat er te vaak een update is aangevraagd. Wacht even en probeer later opnieuw.';
+   let detail=updated?.message||('HTTP '+response.status);
+   if(response.status===429)detail='Wise Old Man weigert de update omdat er te vaak een update is aangevraagd. Wacht minimaal een uur en probeer later opnieuw.';
    throw Error(detail);
   }
-  await response.json();
-  $('message').textContent='Update gelukt. De nieuwste profielgegevens worden geladen…';
-  await load();
-  $('message').textContent='Wise Old Man heeft je spelerdata bijgewerkt en het dashboard is ververst.';
+  if(!updated?.latestSnapshot?.createdAt)throw Error('Wise Old Man gaf geen geldige speler-snapshot terug. De update is niet bevestigd.');
+  const newSnapshot=updated.latestSnapshot.createdAt;
+  const isNewSnapshot=!previousSnapshot||new Date(newSnapshot)>new Date(previousSnapshot);
+  $('message').textContent='Wise Old Man heeft gereageerd. Dashboard en Gains opnieuw laden…';
+  await load(updated);
+  if(isNewSnapshot){
+   $('syncState').textContent='● UPDATE COMPLETE';$('syncState').style.color='';
+   $('message').textContent='Nieuwe Wise Old Man-snapshot ontvangen ('+new Date(newSnapshot).toLocaleString('nl-NL')+'). Profiel en Gains zijn opnieuw geladen.';
+  }else{
+   $('syncState').textContent='● NO NEW SNAPSHOT';$('syncState').style.color='#e5b86b';
+   $('message').textContent='Wise Old Man heeft het updateverzoek verwerkt, maar gaf geen nieuwere snapshot terug. De Gains zijn opnieuw opgehaald, maar kunnen daarom nog ongewijzigd zijn.';
+  }
  }catch(e){
   $('syncState').textContent='● UPDATE FAILED';$('syncState').style.color='#e58d78';
-  $('message').textContent='Update mislukt: '+e.message;
+  const detail=e instanceof TypeError?'De browser kon Wise Old Man niet bereiken (mogelijk een CORS/netwerkblokkade).':e.message;
+  $('message').textContent='Update mislukt: '+detail;
   $('message').className='notice error';
  }finally{button.disabled=false;button.textContent='↻ Update stats'}
 }
