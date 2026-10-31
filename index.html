@@ -361,7 +361,7 @@ function timelineActivity(a){
 }
 function timelineSnapshotEvents(snaps){
  const out=[],ordered=snaps.slice().sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
- const totalMarks=[500,1000,1500,1750,2000,2100,2200,2277,2376],skillMarks=[50,75,90,99],xpMarks=[1000000,5000000,10000000,25000000,50000000,100000000,200000000],kcMarks=[10,50,100,250,500,1000,2000,5000];
+ const totalMarks=[500,1000,1500,1750,2000,2100,2200,2277,2376],skillMarks=[50,75,90,99],base99Xp=13034431,million=1000000,kcStep=100;
  for(let i=1;i<ordered.length;i++){
   const prev=ordered[i-1]?.data||{},cur=ordered[i]?.data||{},date=ordered[i].createdAt;
   const oldTotal=Number(prev.skills?.overall?.level||0),newTotal=Number(cur.skills?.overall?.level||0);
@@ -369,11 +369,15 @@ function timelineSnapshotEvents(snaps){
   for(const [k,v] of Object.entries(cur.skills||{})){
    if(k==='overall'||!v)continue;const old=prev.skills?.[k]||{},ol=Number(old.level||1),nl=Number(v.level||1),ox=Number(old.experience||0),nx=Number(v.experience||0);
    for(const n of skillMarks)if(ol<n&&nl>=n)out.push({id:'snap-skill-'+k+'-'+n+'-'+date,type:'snapshot',category:'skills',title:nice(k)+' level '+n,detail:'Level '+n+' vastgelegd in een historische snapshot.',date,source:'Wise Old Man snapshot',icon:'⚒'});
-   for(const n of xpMarks)if(ox<n&&nx>=n)out.push({id:'snap-xp-'+k+'-'+n+'-'+date,type:'snapshot',category:'skills',title:nice(k)+' · '+short(n)+' XP',detail:'XP-mijlpaal gereconstrueerd uit snapshots.',date,source:'Wise Old Man snapshot',icon:'✨'});
+   // After level 99, create an event for every whole million XP (14M, 15M, 16M, …).
+   const firstMillion=Math.max(14,Math.floor(Math.max(ox,base99Xp)/million)+1),lastMillion=Math.floor(nx/million);
+   for(let m=firstMillion;m<=lastMillion;m++){const n=m*million;out.push({id:'snap-xp-'+k+'-'+n,type:'snapshot',category:'skills',title:nice(k)+' · '+m+'M XP',detail:'Na level 99: '+fmt(n)+' totale XP. Mijlpaal gereconstrueerd uit historische snapshots.',date,source:'Wise Old Man snapshot',icon:'✨',value:n,metric:k});}
   }
   for(const [k,v] of Object.entries(cur.bosses||{})){
    const old=Number(prev.bosses?.[k]?.kills||0),now=Number(v?.kills||0);if(now<0)continue;
-   for(const n of kcMarks)if(old<n&&now>=n)out.push({id:'snap-boss-'+k+'-'+n+'-'+date,type:'snapshot',category:'bosses',title:nice(k)+' · '+n+' KC',detail:'Boss killcount-mijlpaal gereconstrueerd uit snapshots.',date,source:'Wise Old Man snapshot',icon:'☠'});
+   // Every 100 kills per boss, independently.
+   const firstHundred=Math.floor(old/kcStep)+1,lastHundred=Math.floor(now/kcStep);
+   for(let h=firstHundred;h<=lastHundred;h++){const n=h*kcStep;out.push({id:'snap-boss-'+k+'-'+n,type:'snapshot',category:'bosses',title:nice(k)+' · '+fmt(n)+' KC',detail:'Iedere 100 KC: killcount-mijlpaal gereconstrueerd uit historische snapshots.',date,source:'Wise Old Man snapshot',icon:'☠',value:n,metric:k});}
   }
  }
  return out;
@@ -392,7 +396,7 @@ async function loadTimeline(force=false){
   const [achResult,snapResult]=await Promise.allSettled([get(API+'/achievements'),get(API+'/snapshots?limit=200&offset=0')]);
   const achievements=achResult.status==='fulfilled'?(Array.isArray(achResult.value)?achResult.value:(achResult.value.data||[])):[];
   let snapshots=snapResult.status==='fulfilled'?(Array.isArray(snapResult.value)?snapResult.value:(snapResult.value.data||[])):[];
-  if(snapshots.length===200){for(let offset=200;offset<1000;offset+=200){try{const page=await get(API+'/snapshots?limit=200&offset='+offset),items=Array.isArray(page)?page:(page.data||[]);snapshots.push(...items);if(items.length<200)break}catch(e){break}}}
+  if(snapshots.length===200){for(let offset=200;offset<5000;offset+=200){try{const page=await get(API+'/snapshots?limit=200&offset='+offset),items=Array.isArray(page)?page:(page.data||[]);snapshots.push(...items);if(items.length<200)break}catch(e){break}}}
   const events=[...achievements.map(timelineAchievement),...timelineSnapshotEvents(snapshots),...activityItems.map(timelineActivity)];
   const seen=new Set();timelineEvents=events.filter(e=>{if(!e.date||!Number.isFinite(new Date(e.date).getTime()))return false;const k=e.id||[e.title,e.date,e.source].join('|');if(seen.has(k))return false;seen.add(k);return true});
   timelineLoaded=true;renderTimeline();
