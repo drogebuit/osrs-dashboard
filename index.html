@@ -2,9 +2,9 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#071c25"><meta name="description" content="Het persoonlijke Old School RuneScape dashboard van Droge Buit">
+<meta name="theme-color" content="#100d0a"><meta name="description" content="Het persoonlijke Old School RuneScape dashboard van Droge Buit">
 <link rel="manifest" href="manifest.json"><link rel="icon" href="logo.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="logo.svg">
-<title>Droge Buit · OSRS Adventurer’s Log</title>
+<title>Droge Buit · OSRS Command Centre</title>
 <style>
 :root{color-scheme:dark;--bg:#100d0a;--panel:#211a12;--panel2:#302316;--line:#70502a;--gold:#d6a64c;--gold2:#ffe0a0;--txt:#f7edda;--muted:#b9a88d;--green:#8bd6a1;--red:#e58d78;--shadow:0 12px 35px #0008}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#5b3b1b 0,#24190f 32rem,#100d0a 70rem);color:var(--txt);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;padding-bottom:calc(78px + env(safe-area-inset-bottom))}
@@ -61,157 +61,17 @@ button,input,select{font:inherit}button{cursor:pointer;color:inherit}.top{positi
 }
 .boss-line{align-items:center;min-height:54px}.boss-name{display:flex;align-items:center;gap:11px;min-width:0}.boss-icon{width:38px;height:38px;object-fit:contain;image-rendering:auto;filter:drop-shadow(0 2px 4px #0009);flex:0 0 38px}.boss-name i{display:none;font-style:normal;font-size:25px;width:38px;text-align:center;flex:0 0 38px;color:#c7a66a}.boss-name img[style*="display: none"]+i{display:block}.boss-name>span{overflow-wrap:anywhere}.boss-line strong{white-space:nowrap}.skill-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.skill-summary .stat{padding:10px;background:linear-gradient(145deg,#3c2d1d,#211910)}.skill-summary .stat strong{font-size:clamp(16px,4vw,22px)}.skill-tools{display:grid;grid-template-columns:minmax(0,1fr) minmax(145px,.55fr);gap:8px;margin:12px 0}.skill-tools input,.skill-tools select{width:100%;min-width:0;border:1px solid var(--line);border-radius:10px;background:#170f09;color:var(--txt);padding:10px}.skill{grid-template-columns:112px minmax(0,1fr) 34px}.skillname span{overflow-wrap:anywhere}@media(max-width:430px){.skill-summary{gap:5px}.skill-summary .stat{padding:8px 6px}.skill-summary .stat small{font-size:8px}.skill-tools{grid-template-columns:1fr}.skill{grid-template-columns:95px minmax(0,1fr) 28px;gap:7px}.skillname{gap:6px;font-size:12px}.skillname img{width:26px;height:26px;flex-basis:26px}.skill .xp{font-size:9px}}.ge-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0}.ge-summary .stat{padding:9px}.ge-summary .stat small{font-size:8px}.ge-summary .stat strong{font-size:clamp(14px,3.5vw,19px)}.ge-search{display:grid;grid-template-columns:minmax(0,1fr) minmax(135px,.45fr);gap:8px;margin:12px 0}.ge-search input,.ge-search select{width:100%;min-width:0;border:1px solid var(--line);border-radius:10px;background:#170f09;color:var(--txt);padding:10px}.ge-filters{display:flex;align-items:center;gap:15px;flex-wrap:wrap;margin:8px 0 12px;font-size:11px;color:var(--muted)}.ge-filters label{display:flex;align-items:center;gap:5px}.ge-filters input{accent-color:var(--gold)}.ge-table-wrap{overflow:auto;border:1px solid #604728;border-radius:10px}.ge-table{width:100%;border-collapse:collapse;min-width:610px;font-size:11px}.ge-table th{position:sticky;top:0;background:#49351e;color:#ffe0a0;text-align:right;padding:10px 8px;white-space:nowrap}.ge-table th:first-child,.ge-table td:first-child{text-align:left}.ge-table td{padding:8px;border-top:1px solid #594329;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}.ge-item{display:flex;align-items:center;gap:7px;min-width:160px;max-width:245px;text-align:left}.ge-item img{width:28px;height:28px;object-fit:contain;flex:0 0 28px}.ge-item button{border:0;background:none;padding:0;color:#ffe0a0;text-align:left;white-space:normal;font-size:11px}.ge-price-high{color:var(--green)}.ge-price-low{color:#f0c77a}.ge-fav{border:0;background:none;color:#b9a88d;font-size:17px;padding:2px}.ge-fav.on{color:#ffd36e}.ge-more{text-align:center;padding:12px}.ge-detail{margin:12px 0;padding:12px;border:1px solid #98713c;border-radius:12px;background:linear-gradient(145deg,#3c2d1d,#211910)}.ge-detail-head{display:flex;justify-content:space-between;gap:8px;align-items:center}.ge-detail-title{display:flex;align-items:center;gap:10px;font:700 18px Georgia,serif;color:var(--gold2)}.ge-detail-title img{width:42px;height:42px;object-fit:contain}.ge-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0}.ge-detail-grid .stat{padding:9px}.ge-detail-grid .stat strong{font-size:17px}.ge-chart-wrap{margin-top:8px;padding:10px;border:1px solid #604728;border-radius:10px;background:#1b130c}.ge-chart{width:100%;height:auto;display:block;overflow:visible}.ge-chart-summary{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:#c9b99e;font-size:10px}.ge-chart-legend{display:flex;gap:14px;flex-wrap:wrap;margin:5px 0 8px;color:#d8c7a8;font-size:11px}.ge-chart-legend span{display:flex;align-items:center;gap:6px}.ge-chart-legend i{display:inline-block;width:16px;height:3px;border-radius:3px}.ge-detail-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}.ge-detail-tools select{background:#170f09;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:7px}.ge-link{color:var(--gold2);font-size:11px}@media(max-width:500px){.ge-search{grid-template-columns:1fr}.ge-summary{gap:5px}.ge-summary .stat{padding:7px 5px}.ge-summary .stat small{font-size:7px}.ge-detail-grid{gap:5px}}/* Adventure Timeline */
 .timeline-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.timeline-summary .stat{padding:10px}.timeline-summary .stat strong{font-size:clamp(16px,4vw,22px)}.timeline-tools{display:grid;grid-template-columns:minmax(0,1fr) minmax(140px,.45fr);gap:8px;margin:12px 0}.timeline-tools input,.timeline-tools select{width:100%;min-width:0;border:1px solid var(--line);border-radius:10px;background:#170f09;color:var(--txt);padding:10px}.timeline-event{display:grid;grid-template-columns:42px minmax(0,1fr);gap:10px;padding:13px 3px;border-bottom:1px solid #594329}.timeline-event:last-child{border:0}.timeline-event-icon{width:40px;height:40px;display:grid;place-items:center;border:1px solid #8a6939;border-radius:11px;background:linear-gradient(145deg,#49351e,#1c140d);font-size:19px}.timeline-event-main{min-width:0}.timeline-event-title{font-weight:800;color:#ffe0a0;font-size:13px}.timeline-event-detail{font-size:11px;color:#c1ad8b;margin-top:3px;overflow-wrap:anywhere}.timeline-event-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px;font-size:10px;color:#968366}.timeline-tag{border:1px solid #806039;border-radius:12px;padding:1px 6px;color:#d7b777}.timeline-custom{display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,.5fr);gap:8px;margin-top:10px}.timeline-custom input,.timeline-custom select{min-width:0;width:100%;border:1px solid var(--line);border-radius:9px;background:#170f09;color:var(--txt);padding:9px}.timeline-custom button{grid-column:1/-1;justify-self:start}@media(max-width:500px){.timeline-tools,.timeline-custom{grid-template-columns:1fr}.timeline-summary{gap:5px}.timeline-summary .stat{padding:8px 6px}.timeline-summary .stat small{font-size:8px}}
-
-/* Adventurer's Log home: classic RuneScape stone, steel-blue and gold */
-.adventure-board{margin:12px 0;background:linear-gradient(145deg,#26313a,#111a20 58%,#202b32);border:1px solid #8d805e;border-radius:5px;padding:15px;box-shadow:inset 0 1px #d8d1b733,0 12px 28px #0008;position:relative}
-.adventure-board:before{content:"";position:absolute;inset:5px;border:1px solid #c4a95b38;pointer-events:none}
-.adventure-board-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:3px 4px 13px;border-bottom:1px solid #89764d}
-.adventure-board-heading h2{margin:2px 0 3px;font-size:22px;color:#e4c45f;text-shadow:1px 2px #000}
-.adventure-board-heading p{margin:0;max-width:600px}
-.adventure-seal{width:54px;height:54px;display:grid;place-items:center;border:2px ridge #b89a56;border-radius:50%;background:radial-gradient(circle,#46515a,#172027);color:#e8c45c;font:700 20px Georgia,serif;box-shadow:0 3px 12px #0009}
-.adventure-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;padding:13px 0}
-.adventure-tile{min-width:0;min-height:92px;display:flex;align-items:center;gap:10px;text-align:left;padding:12px;border:1px solid #746849;border-radius:3px;background:linear-gradient(145deg,#3a4449,#202a30 65%,#172027);color:#f4e9ca;box-shadow:inset 0 1px #ffffff16,0 3px 8px #0005}
-.adventure-tile:hover{border-color:#e0bd5d;background:linear-gradient(145deg,#4a5050,#29343a 65%,#1b252b)}
-.tile-icon{flex:0 0 38px;width:38px;height:38px;display:grid;place-items:center;border:1px solid #9a8654;border-radius:50%;background:radial-gradient(circle at 35% 25%,#56616a,#1a2329);font-size:20px;color:#edce70;box-shadow:0 2px 7px #0009}
-.tile-copy{display:grid;gap:4px;min-width:0}.tile-copy strong{font:700 14px Georgia,serif;color:#e6c55f;text-transform:uppercase;letter-spacing:.025em}.tile-copy small{font-size:10px;line-height:1.35;color:#c3cbd0}
-.tile-arrow{margin-left:auto;color:#e4c45f;font:700 25px Georgia,serif}
-.adventure-board-footer{display:flex;justify-content:space-between;gap:10px;padding:9px 4px 0;border-top:1px solid #89764d;color:#c3ad70;font:10px Georgia,serif;letter-spacing:.12em}
-.home-journal{background:linear-gradient(145deg,#29343a,#192329);border-color:#746849;border-radius:4px}.home-journal h2{color:#e4c45f}
-@media(max-width:700px){.adventure-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.adventure-tile{min-height:88px;padding:9px;gap:7px}.tile-icon{width:32px;height:32px;flex-basis:32px;font-size:17px}.tile-copy strong{font-size:12px}.tile-copy small{font-size:9px}}
-@media(max-width:390px){.adventure-tiles{grid-template-columns:1fr}.adventure-board-footer{font-size:8px}}
-
-/* Adventurer's Log profile layout — responsive desktop, tablet and mobile */
-:root{--bg:#06151b;--panel:#0b222c;--panel2:#102d38;--line:#294550;--gold:#d5ad43;--gold2:#f2d36e;--txt:#e8edf0;--muted:#91a7b0;--shadow:0 5px 18px #0005}
-body{background:#06151b;color:var(--txt);padding-bottom:calc(76px + env(safe-area-inset-bottom))}
-.top{background:#071c25;border-bottom-color:#304b55;padding:8px clamp(12px,2vw,30px)}
-main{max-width:1800px;width:100%;padding:12px clamp(9px,1.2vw,22px) 30px}
-.brand img{width:40px;height:40px}
-.panel,.stat{background:#0a2029;border:1px solid #294550;border-radius:2px;box-shadow:none}
-h2{color:var(--gold2);font-variant:small-caps;font-size:clamp(18px,1.25vw,23px);letter-spacing:.025em}
-.eyebrow{color:#9db2b9;font-size:9px;letter-spacing:.16em}
-.tabs{background:#071c25;border:1px solid #294550;padding:7px;margin:8px 0 12px}
-.tabs button{border-radius:2px;background:#0d2934;border-color:#294550;color:#bdcbd0}
-.tabs button.active{background:linear-gradient(#f1d36e,#b68b2e);color:#172128;border-color:#f1d36e}
-.bottomnav{background:#071c25;border-color:#294550}
-.bottomnav button.active{color:#f2d36e}
-.adventurer-home{width:100%;display:grid;gap:10px}
-.home-profile{padding:12px 15px 8px;background:#0a2029}
-.home-profile-identity{display:flex;align-items:center;gap:13px;min-width:0}
-.home-avatar{width:66px;height:66px;flex:0 0 66px;border:1px solid #526a72;border-radius:50%;overflow:hidden;background:#102d38}
-.home-avatar img{width:100%;height:100%;object-fit:cover}
-.home-player-copy{min-width:0;flex:1}.home-player-copy h2{margin:1px 0 0;font-size:clamp(21px,2vw,30px);font-variant:small-caps;color:#f1d16a}
-.home-profile-identity .btn{border-radius:2px;background:#102d38;border-color:#526a72}
-.home-top-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:12px;border-top:1px solid #294550}
-.home-top-stat{padding:9px 12px 5px;text-align:center;border-right:1px solid #294550;min-width:0}
-.home-top-stat:last-child{border:0}.home-top-stat small,.home-combat-summary small{display:block;color:#91a7b0;font-size:11px}
-.home-top-stat strong{display:block;color:#f4f5f5;font:700 clamp(17px,1.5vw,23px) Georgia,serif;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.home-total-track,.home-clog-track{height:4px;background:#06151b;margin:4px auto 1px;max-width:150px}.home-total-track i,.home-clog-track i{display:block;height:100%;background:#d4ae43}
-.home-top-stat span{font-size:9px;color:var(--muted)}
-.home-profile-foot{display:flex;justify-content:space-between;gap:8px;border-top:1px solid #294550;padding:7px 2px 0;color:#91a7b0;font-size:9px;letter-spacing:.09em}
-#syncState{color:#a8d3a2}
-.home-columns{display:grid;grid-template-columns:minmax(250px,1fr) minmax(410px,1.25fr) minmax(260px,1fr);gap:10px;align-items:start}
-.home-column{display:grid;gap:10px;min-width:0}
-.home-section{padding:11px 12px;margin:0;min-width:0;background:#0a2029;border-color:#294550}
-.home-section-title{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:7px;margin-bottom:7px;border-bottom:1px solid #294550}
-.home-section-title h2{margin:0}
-.home-text-link{border:0;background:transparent;color:#9fc8d8;font-size:11px;white-space:nowrap;padding:4px}
-.home-text-link:hover{color:#f2d36e}
-.home-skills-panel{height:100%}
-.home-skill-summary{display:flex;justify-content:space-between;gap:8px;padding:3px 3px 8px;color:#aabcc2;font-size:11px}
-.home-skill-summary b{color:#f1d16a;margin-left:5px}
-.home-skill-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
-.home-skill{display:flex;align-items:center;gap:6px;min-width:0;padding:6px 5px;background:#102a34;border:1px solid #173641;border-radius:2px}
-.home-skill img{width:27px;height:27px;object-fit:contain;flex:0 0 27px}
-.home-skill-copy{min-width:0;display:grid;line-height:1.2}
-.home-skill-copy b{font-size:13px;color:#e7edf0;font-variant-numeric:tabular-nums}
-.home-skill-copy small{font-size:9px;color:#8fa7b1;white-space:nowrap}
-.home-skill.maxed{background:#273025;border-color:#64552b}
-.home-skill.maxed .home-skill-copy b{color:#f2d36e}
-.home-combat-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:4px 0 8px;border-bottom:1px solid #294550}
-.home-combat-summary>div{text-align:center}.home-combat-summary strong{color:#f2d36e;font:700 17px Georgia,serif}
-.home-boss-list{display:grid;grid-template-columns:1fr 1fr;column-gap:12px}
-.home-boss-list .line{padding:6px 0;min-height:39px;border-color:#203c46;font-size:11px}
-.home-boss-list .boss-icon,.home-boss-list .boss-name i{width:26px;height:26px;flex-basis:26px}
-.home-boss-list .boss-name{gap:6px}.home-boss-list .boss-line strong{font-size:11px}
-.home-clog-ring-wrap{display:flex;align-items:center;justify-content:center;gap:17px;padding:8px 0}
-.home-clog-ring{width:112px;height:112px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#d1aa3e 0deg,#d1aa3e 0deg,#203943 0deg);position:relative;flex:0 0 auto}
-.home-clog-ring:before{content:"";position:absolute;inset:10px;border-radius:50%;background:#0a2029}
-.home-clog-ring>div{z-index:1;text-align:center;display:grid;line-height:1.1}
-.home-clog-ring strong{font:700 20px Georgia,serif;color:#f2d36e}.home-clog-ring small{font-size:9px;color:#91a7b0}
-.home-clog-numbers{display:grid;gap:2px}.home-clog-numbers strong{font:700 21px Georgia,serif;color:#f0f3f4}.home-clog-numbers span,.home-clog-numbers small{font-size:10px;color:#91a7b0}
-.home-clog-track{max-width:none;margin:3px 0 7px;height:5px}
-.home-quest-note{display:flex;gap:10px;align-items:flex-start;padding:7px 2px 10px}
-.home-quest-emblem{font:28px Georgia,serif;color:#e4c45f}
-.home-quest-note strong{font:700 14px Georgia,serif;color:#e4c45f}
-.home-quest-note p{margin:4px 0 0;color:#9fb1b8;font-size:10px;line-height:1.45}
-.home-shortcuts{display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid #294550;padding-top:9px}
-.home-shortcuts button{background:#102a34;border:1px solid #294550;color:#b8cbd1;padding:6px 9px;font-size:10px;border-radius:2px}
-.home-section .activity-entry{grid-template-columns:30px minmax(0,1fr);gap:8px;padding:9px 0}
-.home-section .activity-icon{width:29px;height:29px;border-radius:3px;background:#102a34;border-color:#294550}
-.home-section .activity-title{font-size:11px;color:#e5edf0}.home-section .activity-detail{font-size:10px}.home-section .activity-time{font-size:9px}
-@media(max-width:1100px){.home-columns{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.home-skills-column{grid-column:1/-1;grid-row:1}.home-skill-grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
-@media(max-width:680px){
- main{padding:8px 7px 22px}.top{padding:7px 10px}.brand img{width:34px;height:34px}
- .home-profile{padding:9px}.home-avatar{width:52px;height:52px;flex-basis:52px}
- .home-top-stats{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:8px}
- .home-top-stat{padding:8px 5px;border-bottom:1px solid #294550}
- .home-top-stat:nth-child(2){border-right:0}.home-top-stat:nth-child(3){border-bottom:0}.home-top-stat:nth-child(4){border-right:0;border-bottom:0}
- .home-columns{grid-template-columns:minmax(0,1fr);gap:8px}
- .home-skills-column{grid-column:auto;grid-row:auto}
- .home-skill-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
- .home-skill{flex-direction:column;justify-content:center;gap:2px;padding:5px 2px;text-align:center;min-height:62px}
- .home-skill img{width:25px;height:25px;flex-basis:25px}
- .home-skill-copy b{font-size:12px}.home-skill-copy small{display:none}
- .home-boss-list{grid-template-columns:1fr 1fr}
- .home-section{padding:9px}
- .tabs{display:none}
-}
-@media(max-width:360px){.home-skill-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.home-top-stat strong{font-size:17px}.home-boss-list{grid-template-columns:1fr}}
-
-
-/* RuneProfile quest, diary and combat-achievement progress */
-.rp-source{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#bca06d;border:1px solid #70552f;border-radius:20px;padding:4px 8px}.rp-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0 14px}.rp-stat{padding:10px;border:1px solid #765a35;border-radius:9px;background:linear-gradient(145deg,#3a2b1c,#21180f);min-width:0}.rp-stat small{display:block;color:#b9a88d;font-size:9px;letter-spacing:.08em;text-transform:uppercase}.rp-stat strong{display:block;color:#ffe0a0;font:700 21px Georgia,serif;margin-top:3px}.rp-stat span{display:block;color:#b9a88d;font-size:10px}.rp-subgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rp-block{min-width:0;border:1px solid #604728;border-radius:10px;padding:11px;background:#1a130d88}.rp-block h3,.rp-quest-head h3{font:700 14px Georgia,serif;color:#f1d18c;margin:0 0 9px}.rp-progress-row{padding:7px 0;border-bottom:1px solid #594329}.rp-progress-row:last-child{border:0}.rp-progress-label{display:flex;justify-content:space-between;gap:8px;font-size:11px}.rp-progress-label strong{color:#ffe0a0;white-space:nowrap}.rp-track{height:5px;background:#493824;border-radius:9px;overflow:hidden;margin-top:5px}.rp-track i{display:block;height:100%;background:linear-gradient(90deg,#98702e,#f4d17b);border-radius:9px}.rp-tierline{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}.rp-tier{font-size:9px;color:#d5c19c;border:1px solid #70552f;border-radius:5px;padding:2px 5px}.rp-tier b{color:#ffe0a0}.rp-quest-list{margin-top:13px;border-top:1px solid #70502a;padding-top:11px}.rp-quest-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.rp-quest-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 2px;border-bottom:1px solid #594329;font-size:11px}.rp-quest-row:last-child{border:0}.rp-quest-state{font-size:9px;white-space:nowrap;border-radius:10px;padding:2px 7px}.rp-quest-state.finished{color:#a9e1a0;background:#29432b}.rp-quest-state.in_progress{color:#f3d18b;background:#493719}.rp-quest-state.not_started{color:#b9a88d;background:#30271d}.rp-error{font-size:11px;color:#e6a18f;padding:8px 0}
-@media(max-width:560px){.rp-overview{gap:5px}.rp-stat{padding:8px 6px}.rp-stat strong{font-size:18px}.rp-stat small{font-size:8px}.rp-subgrid{grid-template-columns:1fr}.rp-block{padding:9px}}
 </style>
 </head>
 <body>
 <header class="top"><div class="brand"><img src="logo.svg" alt="Droge Buit wapenschild"><div><h1>DROGE BUIT</h1><div class="tag">OLD SCHOOL RUNESCAPE · COMMAND CENTRE</div></div></div></header>
 <main>
 <div style="max-width:1000px;margin:0 auto 10px;padding:0 13px"><a class="btn" href="./boss-icons.html" style="display:inline-block;text-decoration:none;color:var(--gold2)">🖼 Boss-iconen controleren</a></div>
-<section id="home" class="adventurer-home">
- <section class="home-profile panel">
-  <div class="home-profile-identity"><a class="home-avatar" href="https://www.runeprofile.com/DROGE%20BUIT" target="_blank" rel="noopener"><img src="https://www.runeprofile.com/og/DROGE%20BUIT.png" alt="Droge Buit character" onerror="this.style.display='none'"></a><div class="home-player-copy"><div class="eyebrow">OLD SCHOOL RUNESCAPE · ADVENTURER'S LOG</div><h2 id="homePlayerName">Droge Buit</h2><div class="small" id="homeUpdated">Wise Old Man · gegevens laden…</div></div><button class="btn" id="refresh" aria-label="Ververs accountgegevens">↻ Sync</button></div>
-  <div class="home-top-stats">
-   <div class="home-top-stat"><small>Combat level</small><strong id="combat">—</strong></div>
-   <div class="home-top-stat"><small>Total level</small><strong id="totalLevel">—</strong><div class="home-total-track"><i id="totalProgress" style="width:0%"></i></div><span id="totalProgressText">/ 2.376</span></div>
-   <div class="home-top-stat"><small>Total XP</small><strong id="totalXp">—</strong></div>
-   <div class="home-top-stat"><small>World rank</small><strong id="homeRank">—</strong></div>
-  </div>
-  <div class="home-profile-foot"><span id="syncState">● SYNCING</span><span>PROFILE DATA · WISE OLD MAN</span></div>
- </section>
- <div class="home-columns">
-  <div class="home-column">
-   <section class="panel home-section"><div class="home-section-title"><h2>Activity</h2><button class="home-text-link" data-tab="timeline">View all ↗</button></div><div id="homeRecent" class="activity-feed"><div class="activity-empty">Recente avonturen verschijnen hier zodra RuneProfile ze beschikbaar stelt.</div></div></section>
-   <section class="panel home-section"><div class="home-section-title"><h2>Combat & Bosses</h2><button class="home-text-link" data-tab="bosses">All bosses ↗</button></div><div class="home-combat-summary"><div><small>EHP</small><strong id="ehp">—</strong></div><div><small>EHB</small><strong id="ehb">—</strong></div><div><small>Time to max</small><strong id="ttm">—</strong></div></div><div id="homeBossList" class="home-boss-list"><div class="empty">Bossgegevens laden…</div></div></section>
-  </div>
-  <div class="home-column home-skills-column">
-   <section class="panel home-section home-skills-panel"><div class="home-section-title"><div><div class="eyebrow">CHARACTER PROGRESSION</div><h2>Skills</h2></div><button class="home-text-link" data-tab="skills">Detailed view ↗</button></div><div class="home-skill-summary"><span>Total level <b id="homeSkillTotal">—</b></span><span>Maxed <b id="homeMaxed">—</b></span></div><div id="homeSkillGrid" class="home-skill-grid"><div class="empty">Skillgegevens laden…</div></div></section>
-  </div>
-  <div class="home-column">
-   <section class="panel home-section"><div class="home-section-title"><h2>Collection Log</h2><button class="home-text-link" data-tab="collection">Open log ↗</button></div><div class="home-clog-ring-wrap"><div class="home-clog-ring" id="homeClogRing"><div><strong id="homeClogPct">—</strong><small>completed</small></div></div><div class="home-clog-numbers"><strong id="homeClogCount">—</strong><span>items collected</span><small id="homeClogTotal">of — items</small></div></div><div class="home-clog-track"><i id="homeClogProgress" style="width:0%"></i></div><div class="small" id="homeClogStatus">Collection Log wordt opgehaald…</div></section>
-   <section class="panel home-section home-quests">
-    <div class="home-section-title"><h2>Quests & Achievements</h2><span class="rp-source">RuneProfile</span></div>
-    <div class="rp-overview" id="rpQuestOverview"><div class="empty">Questgegevens ophalen…</div></div>
-    <div class="rp-subgrid">
-     <section class="rp-block"><h3>Achievement Diaries</h3><div id="rpDiaryList" class="rp-progress-list"><div class="empty">Voortgang ophalen…</div></div></section>
-     <section class="rp-block"><h3>Combat Achievements</h3><div id="rpCombatList" class="rp-progress-list"><div class="empty">Voortgang ophalen…</div></div></section>
-    </div>
-    <div class="rp-quest-list"><div class="rp-quest-head"><h3>Questvoortgang</h3><span id="rpQuestCount" class="small">—</span></div><div id="rpQuestList"><div class="empty">Quests ophalen…</div></div></div>
-    <div class="home-shortcuts"><button data-tab="gains">XP gains</button><button data-tab="goals">Adventure goals</button><button data-tab="ge">Grand Exchange</button></div>
-   </section>
-  </div>
- </div>
-</section></section></section><nav class="tabs" aria-label="Dashboard onderdelen"><button class="active" data-tab="home">⌂ Home</button><button data-tab="skills">⚒ Skills</button><button data-tab="bosses">☠ Bosses</button><button data-tab="gains">✦ XP gains</button><button data-tab="goals">⚑ Goals</button><button data-tab="collection">📜 Collection Log</button><button data-tab="ge">💰 Grand Exchange</button><button data-tab="timeline">✦ Activity Feed</button><button data-tab="about">ⓘ Info</button></nav>
+<section id="home"><section class="hero"><div class="hero-ornament" aria-hidden="true">✦</div><div class="hero-layout"><div class="hero-info"><div class="hero-kicker"><span class="hero-emblem">⚔</span><span><span class="eyebrow">GIELINOR · ADVENTURER PROFILE</span><span class="hero-subtitle">PERSONAL CHARACTER RECORD</span></span><span class="hero-sync" id="syncState">● SYNCING</span></div><div class="herohead"><div><div class="player" id="name">Droge Buit</div><div class="status" id="updated">Wise Old Man · gegevens laden…</div></div><button class="btn hero-refresh" id="refresh">↻ Refresh</button></div>
+<div class="hero-featured"><div class="hero-featured-stat"><small>COMBAT LEVEL</small><strong id="combat">—</strong></div><div class="hero-featured-divider"></div><div class="hero-featured-stat total-feature"><small>TOTAL LEVEL</small><strong id="totalLevel">—</strong><div class="hero-total-track"><i id="totalProgress" style="width:0%"></i></div><span id="totalProgressText">Progress to 2376</span></div></div>
+<div class="grid hero-stats"><div class="stat"><small>Total XP</small><strong id="totalXp">—</strong></div><div class="stat"><small>EHP</small><strong id="ehp">—</strong></div><div class="stat"><small>EHB</small><strong id="ehb">—</strong></div><div class="stat"><small>Time to max</small><strong id="ttm">—</strong></div></div></div><a class="hero-portrait" href="https://www.runeprofile.com/DROGE%20BUIT" target="_blank" rel="noopener" aria-label="Open RuneProfile van Droge Buit"><img src="https://www.runeprofile.com/og/DROGE%20BUIT.png" alt="In-game character van Droge Buit" fetchpriority="high" onerror="this.parentElement.style.display='none'"><span class="portrait-caption">VIEW CHARACTER ↗</span></a></div><div class="hero-footer"><span>✦ OSRS PLAYER PROFILE</span><span>DATA BY WISE OLD MAN</span></div></section><section class="panel activity-panel"><div class="sectionhead"><div><div class="eyebrow">YOUR ADVENTURE JOURNAL</div><h2 style="margin:2px 0 0">✦ Activity Feed</h2></div><div class="activity-actions"><button class="btn" id="notifyToggle">♢ Meldingen uit</button><button class="btn" id="activityRefresh">↻ Sync</button></div></div><div class="small" id="activityStatus">Je recente avonturen worden opgehaald…</div><div id="activityFeed" class="activity-feed"><div class="empty">Activiteiten laden…</div></div></section></section>
+
+<nav class="tabs" aria-label="Dashboard onderdelen"><button class="active" data-tab="home">⌂ Home</button><button data-tab="skills">⚒ Skills</button><button data-tab="bosses">☠ Bosses</button><button data-tab="gains">✦ XP gains</button><button data-tab="goals">⚑ Goals</button><button data-tab="collection">📜 Collection Log</button><button data-tab="ge">💰 Grand Exchange</button><button data-tab="timeline">✦ Adventure Timeline</button><button data-tab="about">ⓘ Info</button></nav>
 <section id="skills" class="panel hidden"><div class="sectionhead"><div><div class="eyebrow">CHARACTER PROGRESSION</div><h2 style="margin:2px 0 0">⚒ Skills & levels</h2></div><span class="small" id="skillCount">Alle skills</span></div><div class="skill-summary"><div class="stat"><small>Gemaxte skills</small><strong id="maxedSkills">—</strong></div><div class="stat"><small>Total level</small><strong id="skillTotalLevel">—</strong></div><div class="stat"><small>Bijna level-up</small><strong id="nearLevel">—</strong></div></div><div class="skill-tools"><input id="skillSearch" type="search" placeholder="Zoek een skill…" aria-label="Zoek een skill"><select id="skillSort" aria-label="Sorteer skills"><option value="level">Hoogste level</option><option value="xp">Meeste XP</option><option value="progress">Bijna level-up</option><option value="name">Naam A–Z</option></select></div><div id="skillList" class="muted">Skillgegevens laden…</div></section>
 <section id="bosses" class="panel hidden"><div class="sectionhead"><h2>☠ Boss killcounts</h2><span class="small">Hoogste KC eerst</span></div><div id="bossList" class="muted">Bossgegevens laden…</div></section>
 <section id="gains" class="panel hidden"><div class="sectionhead"><h2>✦ XP gains</h2><select id="period" class="btn" aria-label="Periode"><option value="day">Vandaag</option><option value="week" selected>Deze week</option><option value="month">Deze maand</option></select></div><div class="grid" style="margin-top:0"><div class="stat"><small>XP verdiend</small><strong id="gainTotal">—</strong></div><div class="stat"><small>Actieve skills</small><strong id="activeSkills">—</strong></div></div><div style="margin-top:15px" id="gainList" class="muted">Gains laden…</div></section>
@@ -228,9 +88,9 @@ h2{color:var(--gold2);font-variant:small-caps;font-size:clamp(18px,1.25vw,23px);
  <p class="notice">Items en voortgang worden opgehaald uit je RuneProfile Collection Log. Synchroniseer je Collection Log in RuneLite om nieuwe drops bij te werken.</p>
 </div></section>
 <section id="timeline" class="panel hidden">
- <div class="sectionhead"><div><div class="eyebrow">YOUR ADVENTURE JOURNAL</div><h2 style="margin:2px 0 0">✦ Activity Feed</h2></div><button class="btn" id="timelineRefresh">↻ Sync geschiedenis</button></div>
- <p class="small">Je recente RuneProfile-activiteiten en je uitgebreide historische mijlpalen staan hier samen. Zoek en filter je avonturen en vind gebeurtenissen uit je accountgeschiedenis terug.</p>
- <section class="panel activity-panel" style="margin:12px 0"><div class="sectionhead"><div><div class="eyebrow">LIVE ACCOUNT UPDATES</div><h2 style="margin:2px 0 0">Recent RuneProfile activity</h2></div><div class="activity-actions"><button class="btn" id="notifyToggle">♢ Meldingen uit</button><button class="btn" id="activityRefresh">↻ Sync</button></div></div><div class="small" id="activityStatus">Je recente avonturen worden opgehaald…</div><div id="activityFeed" class="activity-feed"><div class="empty">Activiteiten laden…</div></div></section><div class="sectionhead" style="margin-top:18px"><div><div class="eyebrow">ACCOUNT HISTORY</div><h2 style="margin:2px 0 0">✦ Milestone archive</h2></div></div><div class="timeline-summary"><div class="stat"><small>Gebeurtenissen</small><strong id="timelineCount">—</strong></div><div class="stat"><small>Oudste registratie</small><strong id="timelineSince" style="font-size:14px">—</strong></div><div class="stat"><small>Bronnen</small><strong id="timelineSources" style="font-size:14px">—</strong></div></div>
+ <div class="sectionhead"><div><div class="eyebrow">THE STORY OF YOUR ACCOUNT</div><h2 style="margin:2px 0 0">✦ Adventure Timeline</h2></div><button class="btn" id="timelineRefresh">↻ Sync geschiedenis</button></div>
+ <p class="small">Een chronologisch overzicht van je OSRS-avontuur, samengesteld uit Wise Old Man-achievements en snapshots, plus recente RuneProfile-activiteiten. Datums kunnen een onzekerheidsmarge hebben.</p>
+ <div class="timeline-summary"><div class="stat"><small>Gebeurtenissen</small><strong id="timelineCount">—</strong></div><div class="stat"><small>Oudste registratie</small><strong id="timelineSince" style="font-size:14px">—</strong></div><div class="stat"><small>Bronnen</small><strong id="timelineSources" style="font-size:14px">—</strong></div></div>
  <div class="timeline-tools"><input id="timelineSearch" type="search" placeholder="Zoek milestone, boss, skill…"><select id="timelineFilter"><option value="all">Alle gebeurtenissen</option><option value="skills">Skills & XP</option><option value="bosses">Bosses & PvM</option><option value="collection">Collection Log & drops</option><option value="achievements">Achievements</option><option value="custom">Eigen gebeurtenissen</option></select></div>
  <div class="small" id="timelineStatus">Historische gegevens laden zodra je deze pagina opent…</div>
  <div id="timelineFeed" class="activity-feed"><div class="activity-empty">Open de tijdlijn om je geschiedenis op te halen.</div></div>
@@ -251,7 +111,7 @@ h2{color:var(--gold2);font-variant:small-caps;font-size:clamp(18px,1.25vw,23px);
 <section id="about" class="panel hidden"><h2>Over dit dashboard</h2><p>Persoonlijk OSRS-dashboard voor Droge Buit, met openbare profielgegevens via Wise Old Man.</p><p class="small">Verversing is handmatig. Wise Old Man bepaalt hoe recent de profieldata is. Doelen worden alleen in de browser op dit apparaat opgeslagen.</p><p><a style="color:var(--gold2)" href="https://wiseoldman.net/players/DROGE%20BUIT" target="_blank" rel="noreferrer">Open Wise Old Man-profiel ↗</a></p></section>
 <div id="message" class="notice">Gegevens worden opgehaald bij Wise Old Man.</div><div class="footer">Forged for Droge Buit · Data by Wise Old Man</div>
 </main>
-<nav class="bottomnav" aria-label="Snelle navigatie"><button class="active" data-tab="home"><b>⌂</b>Home</button><button data-tab="skills"><b>⚒</b>Skills</button><button data-tab="bosses"><b>☠</b>Bosses</button><button data-tab="gains"><b>✦</b>Gains</button><button data-tab="goals"><b>⚑</b>Goals</button><button data-tab="collection"><b>📜</b>Log</button><button data-tab="ge"><b>💰</b>GE</button><button data-tab="timeline"><b>✦</b>Activity</button></nav>
+<nav class="bottomnav" aria-label="Snelle navigatie"><button class="active" data-tab="home"><b>⌂</b>Home</button><button data-tab="skills"><b>⚒</b>Skills</button><button data-tab="bosses"><b>☠</b>Bosses</button><button data-tab="gains"><b>✦</b>Gains</button><button data-tab="goals"><b>⚑</b>Goals</button><button data-tab="collection"><b>📜</b>Log</button><button data-tab="ge"><b>💰</b>GE</button><button data-tab="timeline"><b>✦</b>Tijdlijn</button></nav>
 <script>
 const API='https://api.wiseoldman.net/v2/players/DROGE%20BUIT', RP='https://api.runeprofile.com/v1/accounts/DROGE%20BUIT', $=id=>document.getElementById(id);
 const fmt=n=>Number(n||0).toLocaleString('nl-NL'),short=n=>{n=Number(n||0);return n>=1e9?(n/1e9).toFixed(2).replace('.',',')+'B':n>=1e6?(n/1e6).toFixed(2).replace('.',',')+'M':n>=1e3?(n/1e3).toFixed(1).replace('.',',')+'K':fmt(n)};
@@ -262,16 +122,6 @@ function showTab(id){document.querySelectorAll('[data-tab]').forEach(b=>b.classL
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
 function skillIcon(k){const names={runecraft:'Runecraft',runecrafting:'Runecraft',hitpoints:'Hitpoints'};const name=names[String(k).toLowerCase()]||nice(String(k).toLowerCase());return 'https://oldschool.runescape.wiki/images/'+encodeURIComponent(name.replaceAll(' ','_')+'_icon.png')}
 function xpForLevel(level){let points=0;for(let i=1;i<level;i++)points+=Math.floor(i+300*Math.pow(2,i/7));return Math.floor(points/4)}
-function renderHomeSkills(skills){
- const entries=Object.entries(skills||{}).filter(([k,v])=>k!=='overall'&&v&&v.level!=null);
- $('homeSkillTotal').textContent=fmt(Number(skills?.overall?.level)||entries.reduce((n,[k,v])=>n+Number(v.level||0),0));
- $('homeMaxed').textContent=entries.filter(([k,v])=>Number(v.level)>=99).length+' / '+entries.length;
- $('homeSkillGrid').innerHTML=entries.map(([k,v])=>'<div class="home-skill '+(Number(v.level)>=99?'maxed':'')+'" title="'+nice(k)+' · '+fmt(v.experience)+' XP"><img src="'+skillIcon(k)+'" alt="" loading="lazy" onerror="this.style.visibility=\'hidden\'"><span class="home-skill-copy"><b>'+fmt(v.level)+'</b><small>'+nice(k)+'</small></span></div>').join('')||'<div class="empty">Geen skillgegevens beschikbaar.</div>';
-}
-function renderHomeBosses(bosses){
- const entries=Object.entries(bosses||{}).filter(([k,v])=>v&&Number(v.kills)>0).sort((a,b)=>Number(b[1].kills)-Number(a[1].kills)).slice(0,10);
- $('homeBossList').innerHTML=entries.map(([k,v])=>'<div class="line boss-line"><span class="boss-name"><img class="boss-icon" src="'+bossIcon(k)+'" alt="" loading="lazy" onerror="this.onerror=null;this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'"><i>☠</i><span>'+nice(k)+'</span></span><strong>'+fmt(v.kills)+'</strong></div>').join('')||'<div class="empty">Nog geen boss killcounts beschikbaar.</div>';
-}
 function renderSkills(skills){
  const entries=Object.entries(skills||{}).filter(([k,v])=>k!=='overall'&&v&&v.level!=null).map(([k,v])=>{const level=Number(v.level)||1,xp=Number(v.experience)||0,next=level>=99?xpForLevel(99):xpForLevel(level+1),current=xpForLevel(level),progress=level>=99?100:Math.max(0,Math.min(100,(xp-current)/Math.max(1,next-current)*100));return {k,v,level,xp,next,current,progress,name:nice(k)}});
  $('maxedSkills').textContent=entries.filter(x=>x.level>=99).length+' / '+entries.length;
@@ -286,54 +136,7 @@ function renderSkills(skills){
 function bossIcon(k){return './assets/bosses/'+String(k||'').toLowerCase()+'.png'}
 function renderBosses(bosses){const entries=Object.entries(bosses||{}).filter(([k,v])=>v&&Number(v.kills)>=0).sort((a,b)=>b[1].kills-a[1].kills);$('bossList').innerHTML=entries.map(([k,v])=>'<div class="line boss-line"><span class="boss-name"><img class="boss-icon" src="'+bossIcon(k)+'" alt="" loading="lazy" onerror="this.onerror=null;this.style.display=&quot;none&quot;;this.nextElementSibling.textContent=String.fromCodePoint(9760)"><i>☠</i><span>'+nice(k)+'</span></span><strong>'+fmt(v.kills)+' KC</strong></div>').join('')||'<div class="empty">Geen bossgegevens beschikbaar.</div>'}
 async function loadGains(){const period=$('period').value;$('gainList').textContent='Gains ophalen…';try{const g=await get(API+'/gained?period='+period),gs=g.data?.skills||{},ge=Object.entries(gs).filter(([k,v])=>k!=='overall'&&Number(v.experience?.gained)>0).sort((a,b)=>b[1].experience.gained-a[1].experience.gained);const total=Number(gs.overall?.experience?.gained)||ge.reduce((s,[k,v])=>s+Number(v.experience.gained||0),0);$('gainTotal').textContent=short(total);$('activeSkills').textContent=ge.length;$('gainList').innerHTML=ge.length?(()=>{const max=Math.max(...ge.map(([k,v])=>Number(v.experience.gained)));return ge.map(([k,v])=>'<div class="gainbar"><span>'+nice(k)+'</span><div class="bar"><i style="width:'+Math.max(2,Number(v.experience.gained)/max*100)+'%"></i></div><strong style="color:var(--green)">+'+short(v.experience.gained)+'</strong></div>').join('')})():'<div class="empty">Geen XP gains gevonden voor deze periode.</div>'}catch(e){$('gainTotal').textContent='—';$('activeSkills').textContent='—';$('gainList').textContent='Gains tijdelijk niet beschikbaar.'}}
-
-async function rpGet(path){
- const response=await fetch(RP+path,{headers:{'Accept':'application/json'}});
- if(!response.ok)throw Error('RuneProfile HTTP '+response.status);
- return response.json();
-}
-function rpPercent(done,total){return total?Math.max(0,Math.min(100,Number(done||0)/Number(total)*100)):0}
-function rpProgressRow(label,done,total){
- const pct=rpPercent(done,total);
- return '<div class="rp-progress-row"><div class="rp-progress-label"><span>'+escapeHtml(label)+'</span><strong>'+fmt(done)+' / '+fmt(total)+'</strong></div><div class="rp-track"><i style="width:'+pct.toFixed(2)+'%"></i></div></div>';
-}
-async function loadRuneProfileProgress(){
- const targets=[
-  ['quests','/quests'],
-  ['diaries','/achievement-diaries'],
-  ['combat','/combat-achievements']
- ];
- const results=await Promise.allSettled(targets.map(([,path])=>rpGet(path)));
- const data={};
- results.forEach((result,index)=>{if(result.status==='fulfilled')data[targets[index][0]]=result.value.data||[]});
- const questError=results[0].status==='rejected',diaryError=results[1].status==='rejected',combatError=results[2].status==='rejected';
- const quests=data.quests||[];
- if(!questError){
-  const completed=quests.filter(q=>q.state==='finished').length,started=quests.filter(q=>q.state==='in_progress').length,total=quests.length;
-  const points=quests.filter(q=>q.state==='finished').reduce((sum,q)=>sum+Number(q.points||0),0);
-  $('rpQuestOverview').innerHTML='<div class="rp-stat"><small>Quest points</small><strong>'+fmt(points)+'</strong><span>van '+fmt(quests.reduce((sum,q)=>sum+Number(q.points||0),0))+'</span></div><div class="rp-stat"><small>Quests voltooid</small><strong>'+fmt(completed)+' / '+fmt(total)+'</strong><span>'+rpPercent(completed,total).toFixed(1).replace('.',',')+'% afgerond</span></div><div class="rp-stat"><small>Gestart</small><strong>'+fmt(started)+'</strong><span>'+fmt(total-completed-started)+' nog niet gestart</span></div>';
-  const active=quests.filter(q=>q.state==='in_progress');
-  const shown=active.length?active:quests.filter(q=>q.state==='finished').slice(-6);
-  $('rpQuestCount').textContent=fmt(completed)+' voltooid · '+fmt(started)+' bezig';
-  $('rpQuestList').innerHTML=shown.length?shown.map(q=>'<div class="rp-quest-row"><span>'+escapeHtml(q.name)+'</span><span class="rp-quest-state '+q.state+'">'+(q.state==='finished'?'Voltooid':q.state==='in_progress'?'Bezig':'Niet gestart')+'</span></div>').join(''):'<div class="empty">Geen queststatus beschikbaar.</div>';
- }else{
-  $('rpQuestOverview').innerHTML='<div class="rp-error">Questgegevens konden niet worden opgehaald.</div>';
-  $('rpQuestList').innerHTML='<div class="rp-error">RuneProfile heeft de questlijst niet beschikbaar gesteld.</div>';
-  $('rpQuestCount').textContent='Niet beschikbaar';
- }
- if(!diaryError){
-  $('rpDiaryList').innerHTML=(data.diaries||[]).map(area=>{
-   const done=(area.tiers||[]).reduce((n,t)=>n+Number(t.completed||0),0),total=(area.tiers||[]).reduce((n,t)=>n+Number(t.total||0),0);
-   const tiers=(area.tiers||[]).map(t=>'<span class="rp-tier">'+escapeHtml(t.tier)+' <b>'+fmt(t.completed)+'/'+fmt(t.total)+'</b></span>').join('');
-   return '<div class="rp-progress-row"><div class="rp-progress-label"><span>'+escapeHtml(area.area)+'</span><strong>'+fmt(done)+' / '+fmt(total)+'</strong></div><div class="rp-track"><i style="width:'+rpPercent(done,total).toFixed(2)+'%"></i></div><div class="rp-tierline">'+tiers+'</div></div>';
-  }).join('')||'<div class="empty">Geen diarygegevens beschikbaar.</div>';
- }else $('rpDiaryList').innerHTML='<div class="rp-error">Achievement Diary-data kon niet worden opgehaald.</div>';
- if(!combatError){
-  $('rpCombatList').innerHTML=(data.combat||[]).map(t=>rpProgressRow(t.name,t.completed,t.total)).join('')||'<div class="empty">Geen Combat Achievement-data beschikbaar.</div>';
- }else $('rpCombatList').innerHTML='<div class="rp-error">Combat Achievement-data kon niet worden opgehaald.</div>';
-}
-
-async function load(){ $('message').textContent='Gegevens ophalen…';$('message').className='notice';$('refresh').disabled=true;try{const p=await get(API);profile=p;const snap=p.latestSnapshot?.data||{},skills=snap.skills||{};$('homePlayerName').textContent=p.displayName||p.username||'Droge Buit';$('homeUpdated').textContent='Laatst bijgewerkt: '+(p.updatedAt?new Date(p.updatedAt).toLocaleString('nl-NL'):'onbekend');const total=Number(skills.overall?.level)||0;$('totalLevel').textContent=fmt(total);$('totalProgress').style.width=Math.max(0,Math.min(100,total/2376*100))+'%';$('totalProgressText').textContent=fmt(total)+' / 2.376';$('totalXp').textContent=short(p.exp);$('combat').textContent=fmt(p.combatLevel);$('syncState').textContent='● PROFILE LOADED';$('ehp').textContent=Number(p.ehp||0).toFixed(1).replace('.',',');$('ehb').textContent=Number(p.ehb||0).toFixed(1).replace('.',',');$('ttm').textContent=p.ttm!=null?Math.round(p.ttm)+' u':'—';$('homeRank').textContent=p.rank!=null?'#'+fmt(p.rank):'—';renderSkills(skills);renderHomeSkills(skills);renderBosses(snap.bosses||{});renderHomeBosses(snap.bosses||{});await loadGains();$('message').textContent='Profiel geladen. Data afkomstig van Wise Old Man.'}catch(e){$('syncState').textContent='● SYNC FAILED';$('syncState').style.color='#e58d78';$('message').textContent='Laden mislukt: '+e.message+'. Probeer het later opnieuw.';$('message').className='notice error';$('skillList').textContent='Geen gegevens geladen.';$('homeSkillGrid').textContent='Geen gegevens geladen.'}finally{$('refresh').disabled=false}}
+async function load(){ $('message').textContent='Gegevens ophalen…';$('message').className='notice';$('refresh').disabled=true;try{const p=await get(API);profile=p;const snap=p.latestSnapshot?.data||{},skills=snap.skills||{};$('name').textContent=p.displayName||p.username||'Droge Buit';$('updated').textContent='Laatst bijgewerkt: '+(p.updatedAt?new Date(p.updatedAt).toLocaleString('nl-NL'):'onbekend');const total=Number(skills.overall?.level)||0;$('totalLevel').textContent=fmt(total);$('totalProgress').style.width=Math.max(0,Math.min(100,total/2376*100))+'%';$('totalProgressText').textContent=fmt(total)+' / 2.376 total levels';$('totalXp').textContent=short(p.exp);$('combat').textContent=fmt(p.combatLevel);$('syncState').textContent='● PROFILE LOADED';$('ehp').textContent=Number(p.ehp||0).toFixed(1).replace('.',',');$('ehb').textContent=Number(p.ehb||0).toFixed(1).replace('.',',');$('ttm').textContent=p.ttm!=null?Math.round(p.ttm)+' u':'—';renderSkills(skills);renderBosses(snap.bosses||{});await loadGains();$('message').textContent='Profiel geladen. Data afkomstig van Wise Old Man.'}catch(e){$('syncState').textContent='● SYNC FAILED';$('syncState').style.color='#e58d78';$('message').textContent='Laden mislukt: '+e.message+'. Probeer het later opnieuw.';$('message').className='notice error';$('skillList').textContent='Geen gegevens geladen.'}finally{$('refresh').disabled=false}}
 $('period').addEventListener('change',loadGains);$('refresh').addEventListener('click',load);$('skillSearch').addEventListener('input',()=>renderSkills(profile?.latestSnapshot?.data?.skills||{}));$('skillSort').addEventListener('change',()=>renderSkills(profile?.latestSnapshot?.data?.skills||{}));
 const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch{return d}},write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 function renderGoals(){const a=read('db-goals',[]);$('goalList').innerHTML=a.length?a.map((g,i)=>'<label class="goal '+(g.done?'done':'')+'"><input type="checkbox" data-goal="'+i+'" '+(g.done?'checked':'')+'><span style="flex:1">'+escapeHtml(g.text)+'</span><button class="btn" data-delgoal="'+i+'" type="button">×</button></label>').join(''):'<div class="empty">Nog geen doelen. Voeg je eerste quest toe!</div>'}
@@ -348,7 +151,7 @@ async function loadCollection(){
  try{
   const [log,feed]=await Promise.all([fetch(RP+'/collection-log').then(r=>{if(!r.ok)throw Error('RuneProfile HTTP '+r.status);return r.json()}),Promise.resolve({activities:activityItems})]);
   clogData=log;clogLoaded=true;const pct=log.total?log.obtained/log.total*100:0;
-  $('clogCount').textContent=fmt(log.obtained);$('clogTotal').textContent=fmt(log.total);$('clogPct').textContent=pct.toFixed(1).replace('.',',')+'%';$('homeClogCount').textContent=fmt(log.obtained);$('homeClogTotal').textContent='of '+fmt(log.total)+' items';$('homeClogPct').textContent=pct.toFixed(1).replace('.',',')+'%';$('homeClogProgress').style.width=Math.max(0,Math.min(100,pct))+'%';$('homeClogRing').style.background='conic-gradient(#d1aa3e '+pct*3.6+'deg,#203943 '+pct*3.6+'deg)';$('homeClogStatus').textContent='Laatst gesynchroniseerd: '+new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'});$('clogProgress').style.width=Math.max(0,Math.min(100,pct))+'%';$('clogUpdated').textContent=new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'});
+  $('clogCount').textContent=fmt(log.obtained);$('clogTotal').textContent=fmt(log.total);$('clogPct').textContent=pct.toFixed(1).replace('.',',')+'%';$('clogProgress').style.width=Math.max(0,Math.min(100,pct))+'%';$('clogUpdated').textContent=new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'});
   $('clogTabs').innerHTML=(log.tabs||[]).map(t=>'<button class="btn '+(t.name===clogTab?'gold':'')+'" data-clogtab="'+escapeHtml(t.name)+'">'+escapeHtml(t.name)+' · '+t.obtained+'/'+t.total+'</button>').join('');
   renderClogPages();renderRecentClog(feed.activities||[]);
  }catch(e){$('clogItems').innerHTML='<div class="empty">RuneProfile-data kon niet worden geladen. Controleer of je profiel openbaar is en al een Collection Log-sync heeft gehad.</div>';$('clogRecent').textContent='Geen recente aanwinsten beschikbaar.';$('clogCount').textContent='—';$('clogPct').textContent='—';$('clogTotal').textContent='—';$('clogUpdated').textContent='—'}
@@ -523,16 +326,13 @@ function activityDate(a){
  return Number.isNaN(d.getTime())?'Datum onbekend':d.toLocaleString('nl-NL',{dateStyle:'medium',timeStyle:'short'});
 }
 function renderActivityFeed(items){
- const empty='<div class="activity-empty">Nog geen activiteiten gevonden. Zodra RuneProfile nieuwe avonturen registreert, verschijnen ze hier.</div>';
- if(!items.length){$('activityFeed').innerHTML=empty;if($('homeRecent'))$('homeRecent').innerHTML=empty;return}
+ if(!items.length){$('activityFeed').innerHTML='<div class="activity-empty">Nog geen activiteiten gevonden. Zodra RuneProfile nieuwe avonturen registreert, verschijnen ze hier.</div>';return}
  const rows=items.slice().sort((a,b)=>new Date(b.createdAt||b.created_at||b.timestamp||0)-new Date(a.createdAt||a.created_at||a.timestamp||0));
- const markup=rows.map(a=>{
+ $('activityFeed').innerHTML=rows.map(a=>{
   const item=classifyActivity(a),type=activityPayload(a).type;
   const special=item.special?'<span class="activity-special">'+escapeHtml(item.special)+'</span>':'';
-  return '<article class="activity-entry '+(item.special?'highlight':'')+'"><div class="activity-icon">'+(item.image?'<img class="activity-item-image" src="'+escapeHtml(item.image)+'" alt="" loading="lazy" onerror="this.onerror=null;this.style.display=\\'none\\';this.parentElement.textContent=\\'🏆\\'">':item.icon)+'</div><div class="activity-main"><div class="activity-title">'+escapeHtml(item.title)+special+'<span class="activity-type">'+escapeHtml(type.replaceAll('_',' '))+'</span></div>'+(item.detail?'<div class="activity-detail">'+escapeHtml(item.detail)+'</div>':'')+'<div class="activity-time">'+activityDate(a)+'</div></div></article>';
- });
- $('activityFeed').innerHTML=markup.join('');
- if($('homeRecent'))$('homeRecent').innerHTML=markup.slice(0,3).join('')||empty;
+  return '<article class="activity-entry '+(item.special?'highlight':'')+'"><div class="activity-icon">'+(item.image?'<img class="activity-item-image" src="'+escapeHtml(item.image)+'" alt="" loading="lazy" onerror="this.onerror=null;this.style.display=\'none\';this.parentElement.textContent=\'🏆\'">':item.icon)+'</div><div class="activity-main"><div class="activity-title">'+escapeHtml(item.title)+special+'<span class="activity-type">'+escapeHtml(type.replaceAll('_',' '))+'</span></div>'+(item.detail?'<div class="activity-detail">'+escapeHtml(item.detail)+'</div>':'')+'<div class="activity-time">'+activityDate(a)+'</div></div></article>';
+ }).join('');
 }
 $('activityRefresh').addEventListener('click',loadActivityFeed);$('notifyToggle').addEventListener('click',toggleNotifications);updateNotifyButton();
 function renderRecentClog(activities){
@@ -701,6 +501,6 @@ $('geRows').addEventListener('click',e=>{const fav=e.target.closest('[data-ge-fa
 $('geMore').addEventListener('click',()=>{geVisible+=80;renderGERows()});
 $('geRefresh').addEventListener('click',()=>loadGE(true));
 
-renderGoals();load();loadActivityFeed();loadCollection();loadRuneProfileProgress();
+renderGoals();load();loadActivityFeed();
 if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
