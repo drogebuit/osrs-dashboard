@@ -168,6 +168,10 @@ h2{color:var(--gold2);font-variant:small-caps;font-size:clamp(18px,1.25vw,23px);
 }
 @media(max-width:360px){.home-skill-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.home-top-stat strong{font-size:17px}.home-boss-list{grid-template-columns:1fr}}
 
+
+/* RuneProfile quest, diary and combat-achievement progress */
+.rp-source{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#bca06d;border:1px solid #70552f;border-radius:20px;padding:4px 8px}.rp-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0 14px}.rp-stat{padding:10px;border:1px solid #765a35;border-radius:9px;background:linear-gradient(145deg,#3a2b1c,#21180f);min-width:0}.rp-stat small{display:block;color:#b9a88d;font-size:9px;letter-spacing:.08em;text-transform:uppercase}.rp-stat strong{display:block;color:#ffe0a0;font:700 21px Georgia,serif;margin-top:3px}.rp-stat span{display:block;color:#b9a88d;font-size:10px}.rp-subgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rp-block{min-width:0;border:1px solid #604728;border-radius:10px;padding:11px;background:#1a130d88}.rp-block h3,.rp-quest-head h3{font:700 14px Georgia,serif;color:#f1d18c;margin:0 0 9px}.rp-progress-row{padding:7px 0;border-bottom:1px solid #594329}.rp-progress-row:last-child{border:0}.rp-progress-label{display:flex;justify-content:space-between;gap:8px;font-size:11px}.rp-progress-label strong{color:#ffe0a0;white-space:nowrap}.rp-track{height:5px;background:#493824;border-radius:9px;overflow:hidden;margin-top:5px}.rp-track i{display:block;height:100%;background:linear-gradient(90deg,#98702e,#f4d17b);border-radius:9px}.rp-tierline{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}.rp-tier{font-size:9px;color:#d5c19c;border:1px solid #70552f;border-radius:5px;padding:2px 5px}.rp-tier b{color:#ffe0a0}.rp-quest-list{margin-top:13px;border-top:1px solid #70502a;padding-top:11px}.rp-quest-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.rp-quest-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 2px;border-bottom:1px solid #594329;font-size:11px}.rp-quest-row:last-child{border:0}.rp-quest-state{font-size:9px;white-space:nowrap;border-radius:10px;padding:2px 7px}.rp-quest-state.finished{color:#a9e1a0;background:#29432b}.rp-quest-state.in_progress{color:#f3d18b;background:#493719}.rp-quest-state.not_started{color:#b9a88d;background:#30271d}.rp-error{font-size:11px;color:#e6a18f;padding:8px 0}
+@media(max-width:560px){.rp-overview{gap:5px}.rp-stat{padding:8px 6px}.rp-stat strong{font-size:18px}.rp-stat small{font-size:8px}.rp-subgrid{grid-template-columns:1fr}.rp-block{padding:9px}}
 </style>
 </head>
 <body>
@@ -195,7 +199,16 @@ h2{color:var(--gold2);font-variant:small-caps;font-size:clamp(18px,1.25vw,23px);
   </div>
   <div class="home-column">
    <section class="panel home-section"><div class="home-section-title"><h2>Collection Log</h2><button class="home-text-link" data-tab="collection">Open log ↗</button></div><div class="home-clog-ring-wrap"><div class="home-clog-ring" id="homeClogRing"><div><strong id="homeClogPct">—</strong><small>completed</small></div></div><div class="home-clog-numbers"><strong id="homeClogCount">—</strong><span>items collected</span><small id="homeClogTotal">of — items</small></div></div><div class="home-clog-track"><i id="homeClogProgress" style="width:0%"></i></div><div class="small" id="homeClogStatus">Collection Log wordt opgehaald…</div></section>
-   <section class="panel home-section home-quests"><div class="home-section-title"><h2>Quests & Achievements</h2><button class="home-text-link" data-tab="timeline">Milestones ↗</button></div><div class="home-quest-note"><span class="home-quest-emblem">✦</span><div><strong>Your adventure continues</strong><p>Quest points, diary completion en Combat Achievement-ranks worden toegevoegd zodra we hiervoor betrouwbare OSRS-accountdata kunnen uitlezen.</p></div></div><div class="home-shortcuts"><button data-tab="gains">XP gains</button><button data-tab="goals">Adventure goals</button><button data-tab="ge">Grand Exchange</button></div></section>
+   <section class="panel home-section home-quests">
+    <div class="home-section-title"><h2>Quests & Achievements</h2><span class="rp-source">RuneProfile</span></div>
+    <div class="rp-overview" id="rpQuestOverview"><div class="empty">Questgegevens ophalen…</div></div>
+    <div class="rp-subgrid">
+     <section class="rp-block"><h3>Achievement Diaries</h3><div id="rpDiaryList" class="rp-progress-list"><div class="empty">Voortgang ophalen…</div></div></section>
+     <section class="rp-block"><h3>Combat Achievements</h3><div id="rpCombatList" class="rp-progress-list"><div class="empty">Voortgang ophalen…</div></div></section>
+    </div>
+    <div class="rp-quest-list"><div class="rp-quest-head"><h3>Questvoortgang</h3><span id="rpQuestCount" class="small">—</span></div><div id="rpQuestList"><div class="empty">Quests ophalen…</div></div></div>
+    <div class="home-shortcuts"><button data-tab="gains">XP gains</button><button data-tab="goals">Adventure goals</button><button data-tab="ge">Grand Exchange</button></div>
+   </section>
   </div>
  </div>
 </section></section></section><nav class="tabs" aria-label="Dashboard onderdelen"><button class="active" data-tab="home">⌂ Home</button><button data-tab="skills">⚒ Skills</button><button data-tab="bosses">☠ Bosses</button><button data-tab="gains">✦ XP gains</button><button data-tab="goals">⚑ Goals</button><button data-tab="collection">📜 Collection Log</button><button data-tab="ge">💰 Grand Exchange</button><button data-tab="timeline">✦ Activity Feed</button><button data-tab="about">ⓘ Info</button></nav>
@@ -273,6 +286,53 @@ function renderSkills(skills){
 function bossIcon(k){return './assets/bosses/'+String(k||'').toLowerCase()+'.png'}
 function renderBosses(bosses){const entries=Object.entries(bosses||{}).filter(([k,v])=>v&&Number(v.kills)>=0).sort((a,b)=>b[1].kills-a[1].kills);$('bossList').innerHTML=entries.map(([k,v])=>'<div class="line boss-line"><span class="boss-name"><img class="boss-icon" src="'+bossIcon(k)+'" alt="" loading="lazy" onerror="this.onerror=null;this.style.display=&quot;none&quot;;this.nextElementSibling.textContent=String.fromCodePoint(9760)"><i>☠</i><span>'+nice(k)+'</span></span><strong>'+fmt(v.kills)+' KC</strong></div>').join('')||'<div class="empty">Geen bossgegevens beschikbaar.</div>'}
 async function loadGains(){const period=$('period').value;$('gainList').textContent='Gains ophalen…';try{const g=await get(API+'/gained?period='+period),gs=g.data?.skills||{},ge=Object.entries(gs).filter(([k,v])=>k!=='overall'&&Number(v.experience?.gained)>0).sort((a,b)=>b[1].experience.gained-a[1].experience.gained);const total=Number(gs.overall?.experience?.gained)||ge.reduce((s,[k,v])=>s+Number(v.experience.gained||0),0);$('gainTotal').textContent=short(total);$('activeSkills').textContent=ge.length;$('gainList').innerHTML=ge.length?(()=>{const max=Math.max(...ge.map(([k,v])=>Number(v.experience.gained)));return ge.map(([k,v])=>'<div class="gainbar"><span>'+nice(k)+'</span><div class="bar"><i style="width:'+Math.max(2,Number(v.experience.gained)/max*100)+'%"></i></div><strong style="color:var(--green)">+'+short(v.experience.gained)+'</strong></div>').join('')})():'<div class="empty">Geen XP gains gevonden voor deze periode.</div>'}catch(e){$('gainTotal').textContent='—';$('activeSkills').textContent='—';$('gainList').textContent='Gains tijdelijk niet beschikbaar.'}}
+
+async function rpGet(path){
+ const response=await fetch(RP+path,{headers:{'Accept':'application/json'}});
+ if(!response.ok)throw Error('RuneProfile HTTP '+response.status);
+ return response.json();
+}
+function rpPercent(done,total){return total?Math.max(0,Math.min(100,Number(done||0)/Number(total)*100)):0}
+function rpProgressRow(label,done,total){
+ const pct=rpPercent(done,total);
+ return '<div class="rp-progress-row"><div class="rp-progress-label"><span>'+escapeHtml(label)+'</span><strong>'+fmt(done)+' / '+fmt(total)+'</strong></div><div class="rp-track"><i style="width:'+pct.toFixed(2)+'%"></i></div></div>';
+}
+async function loadRuneProfileProgress(){
+ const targets=[
+  ['quests','/quests'],
+  ['diaries','/achievement-diaries'],
+  ['combat','/combat-achievements']
+ ];
+ const results=await Promise.allSettled(targets.map(([,path])=>rpGet(path)));
+ const data={};
+ results.forEach((result,index)=>{if(result.status==='fulfilled')data[targets[index][0]]=result.value.data||[]});
+ const questError=results[0].status==='rejected',diaryError=results[1].status==='rejected',combatError=results[2].status==='rejected';
+ const quests=data.quests||[];
+ if(!questError){
+  const completed=quests.filter(q=>q.state==='finished').length,started=quests.filter(q=>q.state==='in_progress').length,total=quests.length;
+  const points=quests.filter(q=>q.state==='finished').reduce((sum,q)=>sum+Number(q.points||0),0);
+  $('rpQuestOverview').innerHTML='<div class="rp-stat"><small>Quest points</small><strong>'+fmt(points)+'</strong><span>van '+fmt(quests.reduce((sum,q)=>sum+Number(q.points||0),0))+'</span></div><div class="rp-stat"><small>Quests voltooid</small><strong>'+fmt(completed)+' / '+fmt(total)+'</strong><span>'+rpPercent(completed,total).toFixed(1).replace('.',',')+'% afgerond</span></div><div class="rp-stat"><small>Gestart</small><strong>'+fmt(started)+'</strong><span>'+fmt(total-completed-started)+' nog niet gestart</span></div>';
+  const active=quests.filter(q=>q.state==='in_progress');
+  const shown=active.length?active:quests.filter(q=>q.state==='finished').slice(-6);
+  $('rpQuestCount').textContent=fmt(completed)+' voltooid · '+fmt(started)+' bezig';
+  $('rpQuestList').innerHTML=shown.length?shown.map(q=>'<div class="rp-quest-row"><span>'+escapeHtml(q.name)+'</span><span class="rp-quest-state '+q.state+'">'+(q.state==='finished'?'Voltooid':q.state==='in_progress'?'Bezig':'Niet gestart')+'</span></div>').join(''):'<div class="empty">Geen queststatus beschikbaar.</div>';
+ }else{
+  $('rpQuestOverview').innerHTML='<div class="rp-error">Questgegevens konden niet worden opgehaald.</div>';
+  $('rpQuestList').innerHTML='<div class="rp-error">RuneProfile heeft de questlijst niet beschikbaar gesteld.</div>';
+  $('rpQuestCount').textContent='Niet beschikbaar';
+ }
+ if(!diaryError){
+  $('rpDiaryList').innerHTML=(data.diaries||[]).map(area=>{
+   const done=(area.tiers||[]).reduce((n,t)=>n+Number(t.completed||0),0),total=(area.tiers||[]).reduce((n,t)=>n+Number(t.total||0),0);
+   const tiers=(area.tiers||[]).map(t=>'<span class="rp-tier">'+escapeHtml(t.tier)+' <b>'+fmt(t.completed)+'/'+fmt(t.total)+'</b></span>').join('');
+   return '<div class="rp-progress-row"><div class="rp-progress-label"><span>'+escapeHtml(area.area)+'</span><strong>'+fmt(done)+' / '+fmt(total)+'</strong></div><div class="rp-track"><i style="width:'+rpPercent(done,total).toFixed(2)+'%"></i></div><div class="rp-tierline">'+tiers+'</div></div>';
+  }).join('')||'<div class="empty">Geen diarygegevens beschikbaar.</div>';
+ }else $('rpDiaryList').innerHTML='<div class="rp-error">Achievement Diary-data kon niet worden opgehaald.</div>';
+ if(!combatError){
+  $('rpCombatList').innerHTML=(data.combat||[]).map(t=>rpProgressRow(t.name,t.completed,t.total)).join('')||'<div class="empty">Geen Combat Achievement-data beschikbaar.</div>';
+ }else $('rpCombatList').innerHTML='<div class="rp-error">Combat Achievement-data kon niet worden opgehaald.</div>';
+}
+
 async function load(){ $('message').textContent='Gegevens ophalen…';$('message').className='notice';$('refresh').disabled=true;try{const p=await get(API);profile=p;const snap=p.latestSnapshot?.data||{},skills=snap.skills||{};$('homePlayerName').textContent=p.displayName||p.username||'Droge Buit';$('homeUpdated').textContent='Laatst bijgewerkt: '+(p.updatedAt?new Date(p.updatedAt).toLocaleString('nl-NL'):'onbekend');const total=Number(skills.overall?.level)||0;$('totalLevel').textContent=fmt(total);$('totalProgress').style.width=Math.max(0,Math.min(100,total/2376*100))+'%';$('totalProgressText').textContent=fmt(total)+' / 2.376';$('totalXp').textContent=short(p.exp);$('combat').textContent=fmt(p.combatLevel);$('syncState').textContent='● PROFILE LOADED';$('ehp').textContent=Number(p.ehp||0).toFixed(1).replace('.',',');$('ehb').textContent=Number(p.ehb||0).toFixed(1).replace('.',',');$('ttm').textContent=p.ttm!=null?Math.round(p.ttm)+' u':'—';$('homeRank').textContent=p.rank!=null?'#'+fmt(p.rank):'—';renderSkills(skills);renderHomeSkills(skills);renderBosses(snap.bosses||{});renderHomeBosses(snap.bosses||{});await loadGains();$('message').textContent='Profiel geladen. Data afkomstig van Wise Old Man.'}catch(e){$('syncState').textContent='● SYNC FAILED';$('syncState').style.color='#e58d78';$('message').textContent='Laden mislukt: '+e.message+'. Probeer het later opnieuw.';$('message').className='notice error';$('skillList').textContent='Geen gegevens geladen.';$('homeSkillGrid').textContent='Geen gegevens geladen.'}finally{$('refresh').disabled=false}}
 $('period').addEventListener('change',loadGains);$('refresh').addEventListener('click',load);$('skillSearch').addEventListener('input',()=>renderSkills(profile?.latestSnapshot?.data?.skills||{}));$('skillSort').addEventListener('change',()=>renderSkills(profile?.latestSnapshot?.data?.skills||{}));
 const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch{return d}},write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
@@ -641,6 +701,6 @@ $('geRows').addEventListener('click',e=>{const fav=e.target.closest('[data-ge-fa
 $('geMore').addEventListener('click',()=>{geVisible+=80;renderGERows()});
 $('geRefresh').addEventListener('click',()=>loadGE(true));
 
-renderGoals();load();loadActivityFeed();loadCollection();
+renderGoals();load();loadActivityFeed();loadCollection();loadRuneProfileProgress();
 if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
