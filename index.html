@@ -133,7 +133,7 @@ async function updateWiseOldMan(){
  $('syncState').textContent='● UPDATING PROFILE';$('syncState').style.color='';
  $('message').textContent='Wise Old Man haalt de nieuwste OSRS-hiscores op…';$('message').className='notice';
  try{
-  const response=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'}});
+  const response=await fetch(API,{method:'POST'});
   if(!response.ok){
    let detail='HTTP '+response.status;
    try{const body=await response.json();if(body.message)detail=body.message}catch{}
