@@ -355,9 +355,30 @@ function timelineAchievement(a){
  return {id:'wom-'+a.playerId+'-'+a.metric+'-'+a.threshold+'-'+a.measure,type:'achievement',category,title:a.name||'Wise Old Man achievement',detail:(a.metric?nice(a.metric)+' · ':'')+(a.measure==='kills'?'Killcount-mijlpaal':a.measure==='experience'?'XP-mijlpaal':a.measure==='levels'?'Levelmijlpaal':'Achievement'),date:a.createdAt,accuracy:Number.isFinite(accuracy)&&accuracy>=0?accuracy:null,source:'Wise Old Man',icon:boss?'☠':category==='skills'?'⚒':'🏆'};
 }
 function timelineActivity(a){
- const c=classifyActivity(a),p=activityPayload(a),t=p.type.toLowerCase();
- const category=/collection|clog|drop|loot|item/.test(t)?'collection':/boss|kill|combat/.test(t)?'bosses':/level|skill|xp/.test(t)?'skills':'achievements';
- return {id:'rp-'+activityKey(a),type:'activity',category,title:c.title,detail:c.detail||nice(p.type),date:a.createdAt||a.created_at||a.timestamp||a.date,source:'RuneProfile',icon:c.icon||'✦'};
+ const c=classifyActivity(a),p=activityPayload(a),t=p.type.toLowerCase(),d=p.d||{};
+ const category=/collection|clog|drop|loot|item/.test(t)||/collection.?log/i.test(String(d.category||''))?'collection':/boss|kill/.test(t)?'bosses':/combat.?achievement|combat_task|combatachievement/.test(t)?'achievements':/quest/.test(t)?'achievements':/level|skill|xp/.test(t)?'skills':'achievements';
+ const rawDate=a.createdAt||a.created_at||a.timestamp||a.date||a.time;
+ const date=typeof rawDate==='number'?new Date(rawDate<1e12?rawDate*1000:rawDate).toISOString():rawDate;
+ return {id:'rp-'+activityKey(a),type:'activity',category,title:c.title,detail:c.detail||nice(p.type),date,source:'RuneProfile',icon:c.icon||'✦'};
+}
+const timelineClogKey='db-timeline-clog-state';
+function timelineCollectionEvents(log){
+ if(!log||!Array.isArray(log.tabs))return [];
+ const previous=(()=>{try{return JSON.parse(localStorage.getItem(timelineClogKey)||'null')}catch{return null}})();
+ const current={},events=[],date=new Date().toISOString();
+ for(const tab of log.tabs)for(const page of tab.pages||[])for(const item of page.items||[]){
+  const key=[tab.name,page.name,item.id||item.name].join('|'),qty=Number(item.quantity||0);
+  current[key]={qty,name:item.name||'Collection Log item',tab:tab.name,page:page.name};
+  if(previous&&qty>0&&Number(previous[key]?.qty||0)===0)
+   events.push({id:'clog-item-'+key,type:'collection',category:'collection',title:'Collection Log: '+(item.name||'Nieuw item'),detail:tab.name+' · '+page.name+(qty>1?' · ×'+fmt(qty):''),date,source:'RuneProfile Collection Log-detectie',icon:'💎'});
+ }
+ if(previous)for(const tab of log.tabs)for(const page of tab.pages||[]){
+  const key='page|'+tab.name+'|'+page.name,was=Number(previous[key]?.obtained||0),now=Number(page.obtained||0),total=Number(page.total||0);
+  if(was<total&&now>=total&&total>0)events.push({id:'clog-page-'+key,type:'collection',category:'collection',title:'Collection Log-pagina voltooid: '+page.name,detail:tab.name+' · '+fmt(now)+'/'+fmt(total)+' items',date,source:'RuneProfile Collection Log-detectie',icon:'📜'});
+ }
+ for(const tab of log.tabs)for(const page of tab.pages||[])current['page|'+tab.name+'|'+page.name]={obtained:Number(page.obtained||0),total:Number(page.total||0)};
+ localStorage.setItem(timelineClogKey,JSON.stringify(current));
+ return events;
 }
 function timelineSnapshotEvents(snaps){
  const out=[],ordered=snaps.slice().sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
@@ -393,14 +414,16 @@ function renderTimeline(){
 async function loadTimeline(force=false){
  if(timelineLoading)return;timelineLoading=true;$('timelineRefresh').disabled=true;$('timelineStatus').textContent='Achievements en historische snapshots ophalen…';
  try{
-  const [achResult,snapResult]=await Promise.allSettled([get(API+'/achievements'),get(API+'/snapshots?limit=200&offset=0')]);
+  const [achResult,snapResult,clogResult]=await Promise.allSettled([get(API+'/achievements'),get(API+'/snapshots?limit=200&offset=0'),fetch(RP+'/collection-log').then(r=>{if(!r.ok)throw Error('RuneProfile HTTP '+r.status);return r.json()})]);
   const achievements=achResult.status==='fulfilled'?(Array.isArray(achResult.value)?achResult.value:(achResult.value.data||[])):[];
   let snapshots=snapResult.status==='fulfilled'?(Array.isArray(snapResult.value)?snapResult.value:(snapResult.value.data||[])):[];
   if(snapshots.length===200){for(let offset=200;offset<5000;offset+=200){try{const page=await get(API+'/snapshots?limit=200&offset='+offset),items=Array.isArray(page)?page:(page.data||[]);snapshots.push(...items);if(items.length<200)break}catch(e){break}}}
-  const events=[...achievements.map(timelineAchievement),...timelineSnapshotEvents(snapshots),...activityItems.map(timelineActivity)];
+  const clog=clogResult.status==='fulfilled'?clogResult.value:null;
+  const collectionEvents=clog?timelineCollectionEvents(clog):[];
+  const events=[...achievements.map(timelineAchievement),...timelineSnapshotEvents(snapshots),...activityItems.map(timelineActivity),...collectionEvents];
   const seen=new Set();timelineEvents=events.filter(e=>{if(!e.date||!Number.isFinite(new Date(e.date).getTime()))return false;const k=e.id||[e.title,e.date,e.source].join('|');if(seen.has(k))return false;seen.add(k);return true});
   timelineLoaded=true;renderTimeline();
-  $('timelineStatus').textContent=timelineEvents.length+' historische gebeurtenissen geladen · '+achievements.length+' achievements · '+snapshots.length+' snapshots · '+activityItems.length+' recente RuneProfile-activiteiten'+(achResult.status==='rejected'?' · achievements tijdelijk niet beschikbaar':'')+(snapResult.status==='rejected'?' · snapshots tijdelijk niet beschikbaar':'');
+  $('timelineStatus').textContent=timelineEvents.length+' historische gebeurtenissen geladen · '+achievements.length+' achievements · '+snapshots.length+' snapshots · '+activityItems.length+' RuneProfile-activiteiten · '+collectionEvents.length+' nieuwe Collection Log-detecties'+(achResult.status==='rejected'?' · achievements tijdelijk niet beschikbaar':'')+(snapResult.status==='rejected'?' · snapshots tijdelijk niet beschikbaar':'')+(clogResult.status==='rejected'?' · Collection Log tijdelijk niet beschikbaar':'');
  }catch(e){$('timelineStatus').textContent='Historische data kon niet volledig worden opgehaald. Probeer opnieuw.';renderTimeline()}
  finally{timelineLoading=false;$('timelineRefresh').disabled=false}
 }
