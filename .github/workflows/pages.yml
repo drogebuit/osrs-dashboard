@@ -4,6 +4,8 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
 
 permissions:
   contents: read
@@ -23,6 +25,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Fetch latest RuneProfile player model
+        run: |
+          mkdir -p assets
+          if curl --fail --location --silent --show-error "https://api.runeprofile.com/profiles/models/DROGE%20BUIT" --output assets/player-model.glb; then
+            echo "RuneProfile player model downloaded ($(wc -c < assets/player-model.glb) bytes)"
+          else
+            rm -f assets/player-model.glb
+            echo "::warning::RuneProfile player model is not available; the dashboard will use its portrait fallback."
+          fi
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site
