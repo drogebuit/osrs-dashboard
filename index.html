@@ -472,7 +472,7 @@ if (frame && canvas) {
     scene.add(fill);
 
     const modelRoot = new THREE.Group();
-    modelRoot.rotation.x = Math.PI / 2;
+    // GLB is already exported upright; keep the camera at character eye level.
     modelRoot.scale.setScalar(128);
     modelRoot.add(gltf.scene);
     scene.add(modelRoot);
