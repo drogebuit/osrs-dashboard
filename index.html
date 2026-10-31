@@ -351,7 +351,7 @@ const timelineAgo=ms=>{if(!Number.isFinite(ms)||ms<0)return 'datum niet exact';i
 function timelineAchievement(a){
  const boss=a.measure==='kills'||/boss|barrows|gauntlet|theatre|tombs|inferno|jad|zuk|wintertodt|tempoross|zalcano|hespori|mimic|muspah|yama|nex|nightmare|hydra|vorkath|zulrah|cerberus|kraken|mole|scurrius|araxxor|vardorvis|leviathan|whisperer|duke|sol_heredit/i.test(a.metric||'');
  const category=boss?'bosses':a.measure==='experience'||a.measure==='levels'?'skills':'achievements';
- const accuracy=Number(a.accuracy);
+ const accuracy=a.accuracy==null?null:Number(a.accuracy);
  return {id:'wom-'+a.playerId+'-'+a.metric+'-'+a.threshold+'-'+a.measure,type:'achievement',category,title:a.name||'Wise Old Man achievement',detail:(a.metric?nice(a.metric)+' · ':'')+(a.measure==='kills'?'Killcount-mijlpaal':a.measure==='experience'?'XP-mijlpaal':a.measure==='levels'?'Levelmijlpaal':'Achievement'),date:a.createdAt,accuracy:Number.isFinite(accuracy)&&accuracy>=0?accuracy:null,source:'Wise Old Man',icon:boss?'☠':category==='skills'?'⚒':'🏆'};
 }
 function timelineActivity(a){
