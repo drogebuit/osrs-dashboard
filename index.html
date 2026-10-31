@@ -395,9 +395,10 @@ function geTax(price,exempt=false){if(exempt||!Number.isFinite(price)||price<=0)
 function geOpportunityData(){
  const now=Math.floor(Date.now()/1000),out=[];
  for(const i of geMapping){
-  const p=geLatest[i.id]||{},v=geVolumes[i.id]||{},buy=Number(p.low),sell=Number(p.high),vol=Number(v.volume)||0;
+  const p=geLatest[i.id]||{},v=geVolumes[i.id]||{},buy=Number(p.low),sell=Number(p.high);
+  const vol=(Number(v.highPriceVolume)||0)+(Number(v.lowPriceVolume)||0);
   const lowAge=now-Number(p.lowTime||0),highAge=now-Number(p.highTime||0);
-  if(!(buy>0&&sell>0&&sell>buy&&vol>=5&&lowAge>=0&&highAge>=0&&lowAge<=900&&highAge<=900))continue;
+  if(!(buy>0&&sell>0&&sell>buy&&vol>=5&&lowAge>=0&&highAge>=0&&lowAge<=3600&&highAge<=3600))continue;
   const tax=geTax(sell),net=sell-tax-buy,roi=net/buy*100;
   if(net<=0||!Number.isFinite(roi))continue;
   out.push({item:i,buy,sell,tax,net,roi,volume:vol,age:Math.max(lowAge,highAge)});
