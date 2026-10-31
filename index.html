@@ -406,7 +406,7 @@ function geOpportunityData(){
 }
 function renderGEOpportunities(){
  const a=geOpportunityData();$('geOpportunityCount').textContent=fmt(a.length);
- $('geOpportunityRows').innerHTML=a.slice(0,100).map(x=>'<tr><td><div class="ge-item"><img loading="lazy" src="'+geIcon(x.item)+'" alt="" onerror="this.style.visibility=\\'hidden\\'"><button data-ge-item="'+x.item.id+'">'+escapeHtml(x.item.name)+'</button></div></td><td class="ge-price-low">'+geNum(x.buy)+'</td><td class="ge-price-high">'+geNum(x.sell)+'</td><td style="color:var(--green)">'+geNum(x.net)+'</td><td>'+x.roi.toFixed(2).replace('.',',')+'%</td><td>'+fmt(x.volume)+'</td><td><button class="btn" data-ge-calc="'+x.item.id+'">Reken</button></td></tr>').join('')||'<tr><td colspan="7" class="empty">Geen items voldoen op dit moment aan de filters. Dat is beter dan onbetrouwbare kansen tonen.</td></tr>';
+ $('geOpportunityRows').innerHTML=a.slice(0,100).map(x=>'<tr><td><div class="ge-item"><img loading="lazy" src="'+geIcon(x.item)+'" alt="" onerror="this.style.visibility=\'hidden\'"><button data-ge-item="'+x.item.id+'">'+escapeHtml(x.item.name)+'</button></div></td><td class="ge-price-low">'+geNum(x.buy)+'</td><td class="ge-price-high">'+geNum(x.sell)+'</td><td style="color:var(--green)">'+geNum(x.net)+'</td><td>'+x.roi.toFixed(2).replace('.',',')+'%</td><td>'+fmt(x.volume)+'</td><td><button class="btn" data-ge-calc="'+x.item.id+'">Reken</button></td></tr>').join('')||'<tr><td colspan="7" class="empty">Geen items voldoen op dit moment aan de filters. Dat is beter dan onbetrouwbare kansen tonen.</td></tr>';
 }
 function geSetTab(tab){
  document.querySelectorAll('[data-ge-tab]').forEach(b=>b.classList.toggle('active',b.dataset.geTab===tab));
